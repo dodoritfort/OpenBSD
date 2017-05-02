@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<meta name="generator" content="Jekyll v3.3.1">
+
+		<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Merriweather:400,400italic,700,700italic|Open+Sans:400,400italic,600,600italic,700,700italic|Inconsolata:400,700">
+		<link rel="stylesheet" href="/css/main.css">
+		<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+		<link rel="icon" type="image/png" href="/touch-icon.png" sizes="192x192">
+		<link rel="icon" type="image/png" href="/images/favicon.png">
+
+		<link type="application/atom+xml" rel="alternate" href="http://localhost:4000/feed.xml" title="OpenBSD" />
+		<!-- Begin Jekyll SEO tag v2.0.0 -->
+<title>Installer et configurer un serveur HTTP + SSL et PHP - OpenBSD</title>
+<meta property="og:title" content="Installer et configurer un serveur HTTP + SSL et PHP" />
+<meta name="description" content="De base, OpenBSD embarque HTTPD en tant que serveur web et SQLite comme serveur de base de données." />
+<meta property="og:description" content="De base, OpenBSD embarque HTTPD en tant que serveur web et SQLite comme serveur de base de données." />
+<link rel="canonical" href="http://localhost:4000/web/installer_et_configurer_un_serveur_http_ssl_et_php/" />
+<meta property="og:url" content="http://localhost:4000/web/installer_et_configurer_un_serveur_http_ssl_et_php/" />
+<meta property="og:site_name" content="OpenBSD" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2017-05-02T19:55:55+02:00" />
+<script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "Article",
+    "headline": "Installer et configurer un serveur HTTP + SSL et PHP",
+    "datePublished": "2017-05-02T19:55:55+02:00",
+    "description": "De base, OpenBSD embarque HTTPD en tant que serveur web et SQLite comme serveur de base de données.",
+    "logo": "http://localhost:4000/siteicon.png",
+    "url": "http://localhost:4000/web/installer_et_configurer_un_serveur_http_ssl_et_php/"
+  }
+</script>
+<!-- End Jekyll SEO tag -->
+
+		
+	</head>
+
+	<body>
+		<header>
+			<h1>
+				<a href="/"><img src="/images/emblem.svg" width="40" height="40" alt="OpenBSD logo"></a>
+				OpenBSD
+				<button type="button" class="open-nav" id="open-nav"></button>
+			</h1>
+
+			<form action="/search/" method="get">
+				<input type="text" name="q" id="search-input" placeholder="Search" autofocus>
+				<input type="submit" value="Search" style="display: none;">
+			</form>
+
+			<nav class="full-navigation">
+				<ul>
+					<li class="nav-item top-level ">
+						
+						<a href="/">Bienvenue</a>
+					</li>
+				</ul>
+
+				<ul>
+					
+					
+						<li class="nav-item top-level ">
+							
+							<a href="/maintenance/monter_les_partitions_openbsd_sous_freebsd11-0_rescue/">Maintenance</a>
+							<ul>
+								
+									<li class="nav-item "><a href="/maintenance/monter_les_partitions_openbsd_sous_freebsd11-0_rescue/">Monter les partitions OpenBSD sous FreeBSD11.0-Rescue</a></li>
+								
+									<li class="nav-item "><a href="/maintenance/installer_les_headers_X_manquants/">Installer les headers X manquants</a></li>
+								
+							</ul>
+						</li>
+					
+						<li class="nav-item top-level ">
+							
+							<a href="/messagerie/installer_le_serveur_de_messagerie_instantanee_prosody_xmpp/">Messagerie</a>
+							<ul>
+								
+									<li class="nav-item "><a href="/messagerie/installer_le_serveur_de_messagerie_instantanee_prosody_xmpp/">Installer le serveur de messagerie Prosody (XMPP)</a></li>
+								
+							</ul>
+						</li>
+					
+						<li class="nav-item top-level ">
+							
+							<a href="/reseau/creer_son_propre_serveur_dns_avec_unbound/">Réseau</a>
+							<ul>
+								
+									<li class="nav-item "><a href="/reseau/creer_son_propre_serveur_dns_avec_unbound/">Créer son propre serveur DNS avec Unbound</a></li>
+								
+									<li class="nav-item "><a href="/reseau/creer_un_serveur_vpn_avec_openvpn/">Créer un serveur VPN avec OpenVPN</a></li>
+								
+							</ul>
+						</li>
+					
+						<li class="nav-item top-level ">
+							
+							<a href="/systeme/installer_openbsd_6-0_sur_votre_serveur_kimsufi/">Système</a>
+							<ul>
+								
+									<li class="nav-item "><a href="/systeme/installer_openbsd_6-0_sur_votre_serveur_kimsufi/">Installer OpenBSD sur votre serveur Kimsufi</a></li>
+								
+									<li class="nav-item "><a href="/systeme/installer_et_configurer_nano/">Installer et configurer Nano</a></li>
+								
+									<li class="nav-item "><a href="/systeme/configurer_ssh/">Configurer SSH</a></li>
+								
+									<li class="nav-item "><a href="/systeme/configurer_doas/">Configurer DOAS</a></li>
+								
+									<li class="nav-item "><a href="/systeme/configuration_minimale_de_packetfilter/">Configuration minimale de PacketFilter</a></li>
+								
+									<li class="nav-item "><a href="/systeme/afficher_ou_changer_le_hostname/">Afficher / Changer le hostname</a></li>
+								
+							</ul>
+						</li>
+					
+						<li class="nav-item top-level ">
+							
+							<a href="/torrent/installer_et_configurer_transmission/">Torrent</a>
+							<ul>
+								
+									<li class="nav-item "><a href="/torrent/installer_et_configurer_transmission/">Installer et configurer Transmission</a></li>
+								
+							</ul>
+						</li>
+					
+						<li class="nav-item top-level current">
+							
+							<a href="/web/installer_et_configurer_un_serveur_http_ssl_et_php/">Web</a>
+							<ul>
+								
+									<li class="nav-item current"><a href="/web/installer_et_configurer_un_serveur_http_ssl_et_php/">Installer et configurer un serveur HTTP + SSL et PHP</a></li>
+								
+									<li class="nav-item "><a href="/web/creer_une_base_de_donnees_sql_avec_mariadb/">Créer une base de données SQL avec MariaDB</a></li>
+								
+									<li class="nav-item "><a href="/web/installer_nextcloud_11/">Installer NextCloud 11</a></li>
+								
+									<li class="nav-item "><a href="/web/utiliser_relayd_en_tant_que_reverse_proxy/">Utiliser relayd en tant que Reverse Proxy</a></li>
+								
+							</ul>
+						</li>
+					
+				</ul>
+
+				<ul>
+					<li class="nav-item top-level ">
+						
+						<a href="/changelog/">Change Log</a>
+					</li>
+				</ul>
+			</nav>
+		</header>
+
+		<section class="main">
+			<div class="page-header">
+				<h2>Web</h2>
+				<h3>Installer et configurer un serveur HTTP + SSL et PHP</h3>
+			</div>
+			<article class="content">
+				<p>De base, OpenBSD embarque HTTPD en tant que serveur web et SQLite comme serveur de base de données.</p>
+
+<p>Nous allons donc procéder à l’installation de PHP 7.</p>
+
+<blockquote>
+  <p>pkg_add -i php-7.0.8p0</p>
+</blockquote>
+
+<div class="highlighter-rouge"><pre class="highlight"><code># pkg_add -i php-7.0.8p0
+quirks-2.241 signed on 2016-07-26T16:56:10Z
+php-7.0.8p0:xz-5.2.2p0: ok
+php-7.0.8p0:libxml-2.9.3: ok
+php-7.0.8p0:femail-1.0p1: ok
+php-7.0.8p0:femail-chroot-1.0p2: ok
+php-7.0.8p0: ok
+The following new rcscripts were installed: /etc/rc.d/php70_fpm
+See rcctl(8) for details.
+Look in /usr/local/share/doc/pkg-readmes for extra documentation.
+</code></pre>
+</div>
+
+<p>Puis nous l’activons et le démarrons.</p>
+
+<blockquote>
+  <p>rcctl enable php70_fpm</p>
+</blockquote>
+
+<blockquote>
+  <p>rcctl start php70_fpm</p>
+</blockquote>
+
+<p>Nous allons commencer copier un exemple de fichier de configuration.</p>
+
+<blockquote>
+  <p>cp /etc/examples/httpd.conf /etc/httpd.conf</p>
+</blockquote>
+
+<p>Puis nous le modifions selon nos besoins.</p>
+
+<blockquote>
+  <p>nano /etc/httpd.conf</p>
+</blockquote>
+
+<div class="highlighter-rouge"><pre class="highlight"><code># $OpenBSD: httpd.conf,v 1.14 2015/02/04 08:39:35 florian Exp $
+
+#
+# Macros
+#
+ext_addr="*"
+
+#
+# Global Options
+#
+# prefork 3
+
+#
+# Servers
+#
+
+server "cloud.votredomaine.fr" {
+        listen on $ext_addr port 80
+        root "/htdocs/cloud/"
+        directory index index.php
+
+        location "/*.php*" {
+                fastcgi socket "/run/php-fpm.sock"
+        }
+}
+
+# Include MIME types instead of the built-in ones
+types {
+        include "/usr/share/misc/mime.types"
+}
+#
+</code></pre>
+</div>
+
+<p>Ensuite, on vérifie que la configuration est OK.</p>
+
+<blockquote>
+  <p>httpd -n</p>
+</blockquote>
+
+<div class="highlighter-rouge"><pre class="highlight"><code># httpd -n
+configuration OK
+</code></pre>
+</div>
+
+<p>Nous devons bien entendu créer le répertoire /var/www/htdocs/cloud au vue de la configuration ci-dessus.</p>
+
+<blockquote>
+  <p>mkdir /var/www/htdocs/cloud</p>
+</blockquote>
+
+<p>N’oublions pas non plus de créer un fichier index.php afin que par la suite nous puissions générer notre certificat SSL.</p>
+
+<blockquote>
+  <p>nano /var/www/htdocs/cloud/index.php</p>
+</blockquote>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>&lt;?php echo("test"); ?&gt;
+</code></pre>
+</div>
+
+<p>Et attribuer ce dossier à son propriétaire.</p>
+
+<blockquote>
+  <p>chown -R www:daemon /var/www/htdocs/cloud</p>
+</blockquote>
+
+<p>Nous pouvons à présent activer et démarrer le service <code class="highlighter-rouge">httpd</code>.</p>
+
+<blockquote>
+  <p>rcctl enable httpd</p>
+</blockquote>
+
+<blockquote>
+  <p>rcctl start httpd</p>
+</blockquote>
+
+<p>Nous installons ensuite <code class="highlighter-rouge">certbot</code> afin de générer un certificat SSL.</p>
+
+<blockquote>
+  <p>pkg_add -i certbot</p>
+</blockquote>
+
+<div class="highlighter-rouge"><pre class="highlight"><code># pkg_add -i certbot
+quirks-2.241 signed on 2016-07-26T16:56:10Z
+certbot-0.8.1:dialog-1.2.20150920p0: ok
+certbot-0.8.1:libffi-3.2.1p2: ok
+certbot-0.8.1:python-2.7.12: ok
+certbot-0.8.1:py-python2-pythondialog-3.3.0p0: ok
+certbot-0.8.1:py-setuptools-18.2p0v0: ok
+certbot-0.8.1:py-psutil-4.1.0: ok
+certbot-0.8.1:py-asn1-0.1.9p0v0: ok
+certbot-0.8.1:py-idna-2.1: ok
+certbot-0.8.1:py-ipaddress-1.0.16: ok
+certbot-0.8.1:py-cparser-2.10p1: ok
+certbot-0.8.1:py-cffi-1.4.2: ok
+certbot-0.8.1:py-enum34-1.1.6: ok
+certbot-0.8.1:py-six-1.10.0: ok
+certbot-0.8.1:py-cryptography-1.4: ok
+certbot-0.8.1:py-openssl-0.15.1p1: ok
+certbot-0.8.1:py-ndg-httpsclient-0.4.0p0: ok
+certbot-0.8.1:py-werkzeug-0.11.10: ok
+certbot-0.8.1:py-tz-2016.4: ok
+certbot-0.8.1:py-pyRFC3339-1.0p0: ok
+certbot-0.8.1:py-requests-2.10.0: ok
+certbot-0.8.1:py-acme-0.8.1: ok
+certbot-0.8.1:py-ConfigArgParse-0.10.0p0: ok
+certbot-0.8.1:py-parsedatetime-2.1: ok
+certbot-0.8.1:py-configobj-5.0.6p0: ok
+certbot-0.8.1:py-zopeevent-4.1.0p0: ok
+certbot-0.8.1:py-zopeinterface-4.1.3p0: ok
+certbot-0.8.1:py-pbr-1.8.1: ok
+certbot-0.8.1:py-funcsigs-1.0.2: ok
+certbot-0.8.1:py-mock-2.0.0: ok
+certbot-0.8.1:py-zopecomponent-4.2.2p0: ok
+certbot-0.8.1: ok
+--- +python-2.7.12 -------------------
+If you want to use this package as your default system python, as root
+create symbolic links like so (overwriting any previous default):
+ ln -sf /usr/local/bin/python2.7 /usr/local/bin/python
+ ln -sf /usr/local/bin/python2.7-2to3 /usr/local/bin/2to3
+ ln -sf /usr/local/bin/python2.7-config /usr/local/bin/python-config
+ ln -sf /usr/local/bin/pydoc2.7  /usr/local/bin/pydoc
+</code></pre>
+</div>
+
+<p>Nous avons les outils pour générer notre premier certificat.</p>
+
+<blockquote>
+  <p>certbot certonly –webroot –rsa-key-size 4096 -w /var/www/htdocs/cloud -d cloud.votredomaine.fr</p>
+</blockquote>
+
+<div class="highlighter-rouge"><pre class="highlight"><code># certbot certonly --webroot --rsa-key-size 4096 -w /var/www/htdocs/cloud -d cloud.votredomaine.fr
+
+IMPORTANT NOTES:
+ - Congratulations! Your certificate and chain have been saved at
+   /etc/letsencrypt/live/cloud.votredomaine.fr/fullchain.pem. Your
+   cert will expire on 2017-07-04. To obtain a new or tweaked version
+   of this certificate in the future, simply run certbot again. To
+   non-interactively renew *all* of your certificates, run "certbot
+   renew"
+ - If you like Certbot, please consider supporting our work by:
+
+   Donating to ISRG / Let's Encrypt:   https://letsencrypt.org/donate
+   Donating to EFF:                    https://eff.org/donate-le
+</code></pre>
+</div>
+
+<p>Nous arrêtons notre service httpd pour pouvoir modifier notre fichier de configuration.</p>
+
+<blockquote>
+  <p>rcctl stop httpd</p>
+</blockquote>
+
+<p>Et on modifie le fichier de configuration de HTTPD.</p>
+
+<blockquote>
+  <p>nano /etc/httpd.conf</p>
+</blockquote>
+
+<div class="highlighter-rouge"><pre class="highlight"><code># $OpenBSD: httpd.conf,v 1.14 2015/02/04 08:39:35 florian Exp $
+
+#
+# Macros
+#
+ext_addr="*"
+
+#
+# Global Options
+#
+# prefork 3
+
+#
+# Servers
+#
+server "cloud.votredomaine.fr" {
+        listen on * port 80
+        block return 301 "https://$SERVER_NAME$REQUEST_URI"
+}
+
+server "cloud.votredomaine.fr" {
+        listen on $ext_addr tls port 443
+        root "/htdocs/nextcloud/"
+        directory index index.php
+        tls {
+                key "/etc/letsencrypt/live/cloud.votredomaine.fr/privkey.pem"
+                certificate "/etc/letsencrypt/live/cloud.votredomaine.fr/fullchain.pem"
+        }
+        hsts
+
+        location "/*.php*" {
+                fastcgi socket "/run/php-fpm.sock"
+        }
+}
+
+# Include MIME types instead of the built-in ones
+types {
+        include "/usr/share/misc/mime.types"
+}
+</code></pre>
+</div>
+
+<p>Au vue des modifications, une petite vérification de configuration s’impose !</p>
+
+<blockquote>
+  <p>httpd -n</p>
+</blockquote>
+
+<p>Si tout est ok, nous pouvons relancer notre service httpd.</p>
+
+<blockquote>
+  <p>rcctl start httpd</p>
+</blockquote>
+
+<p>Et voilà, le tour est joué !</p>
+
+			</article>
+		</section>
+
+		<script>
+			document.getElementById("open-nav").addEventListener("click", function () {
+				document.body.classList.toggle("nav-open");
+			});
+		</script>
+	</body>
+</html>

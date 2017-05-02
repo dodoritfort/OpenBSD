@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<meta name="generator" content="Jekyll v3.3.1">
+
+		<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Merriweather:400,400italic,700,700italic|Open+Sans:400,400italic,600,600italic,700,700italic|Inconsolata:400,700">
+		<link rel="stylesheet" href="/css/main.css">
+		<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+		<link rel="icon" type="image/png" href="/touch-icon.png" sizes="192x192">
+		<link rel="icon" type="image/png" href="/images/favicon.png">
+
+		<link type="application/atom+xml" rel="alternate" href="http://localhost:4000/feed.xml" title="OpenBSD" />
+		<!-- Begin Jekyll SEO tag v2.0.0 -->
+<title>Installer et configurer Nano - OpenBSD</title>
+<meta property="og:title" content="Installer et configurer Nano" />
+<meta name="description" content="Tout d’abords, installons Nano." />
+<meta property="og:description" content="Tout d’abords, installons Nano." />
+<link rel="canonical" href="http://localhost:4000/systeme/installer_et_configurer_nano/" />
+<meta property="og:url" content="http://localhost:4000/systeme/installer_et_configurer_nano/" />
+<meta property="og:site_name" content="OpenBSD" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2017-05-02T19:55:55+02:00" />
+<script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "Article",
+    "headline": "Installer et configurer Nano",
+    "datePublished": "2017-05-02T19:55:55+02:00",
+    "description": "Tout d’abords, installons Nano.",
+    "logo": "http://localhost:4000/siteicon.png",
+    "url": "http://localhost:4000/systeme/installer_et_configurer_nano/"
+  }
+</script>
+<!-- End Jekyll SEO tag -->
+
+		
+	</head>
+
+	<body>
+		<header>
+			<h1>
+				<a href="/"><img src="/images/emblem.svg" width="40" height="40" alt="OpenBSD logo"></a>
+				OpenBSD
+				<button type="button" class="open-nav" id="open-nav"></button>
+			</h1>
+
+			<form action="/search/" method="get">
+				<input type="text" name="q" id="search-input" placeholder="Search" autofocus>
+				<input type="submit" value="Search" style="display: none;">
+			</form>
+
+			<nav class="full-navigation">
+				<ul>
+					<li class="nav-item top-level ">
+						
+						<a href="/">Bienvenue</a>
+					</li>
+				</ul>
+
+				<ul>
+					
+					
+						<li class="nav-item top-level ">
+							
+							<a href="/maintenance/monter_les_partitions_openbsd_sous_freebsd11-0_rescue/">Maintenance</a>
+							<ul>
+								
+									<li class="nav-item "><a href="/maintenance/monter_les_partitions_openbsd_sous_freebsd11-0_rescue/">Monter les partitions OpenBSD sous FreeBSD11.0-Rescue</a></li>
+								
+									<li class="nav-item "><a href="/maintenance/installer_les_headers_X_manquants/">Installer les headers X manquants</a></li>
+								
+							</ul>
+						</li>
+					
+						<li class="nav-item top-level ">
+							
+							<a href="/messagerie/installer_le_serveur_de_messagerie_instantanee_prosody_xmpp/">Messagerie</a>
+							<ul>
+								
+									<li class="nav-item "><a href="/messagerie/installer_le_serveur_de_messagerie_instantanee_prosody_xmpp/">Installer le serveur de messagerie Prosody (XMPP)</a></li>
+								
+							</ul>
+						</li>
+					
+						<li class="nav-item top-level ">
+							
+							<a href="/reseau/creer_son_propre_serveur_dns_avec_unbound/">Réseau</a>
+							<ul>
+								
+									<li class="nav-item "><a href="/reseau/creer_son_propre_serveur_dns_avec_unbound/">Créer son propre serveur DNS avec Unbound</a></li>
+								
+									<li class="nav-item "><a href="/reseau/creer_un_serveur_vpn_avec_openvpn/">Créer un serveur VPN avec OpenVPN</a></li>
+								
+							</ul>
+						</li>
+					
+						<li class="nav-item top-level current">
+							
+							<a href="/systeme/installer_openbsd_6-0_sur_votre_serveur_kimsufi/">Système</a>
+							<ul>
+								
+									<li class="nav-item "><a href="/systeme/installer_openbsd_6-0_sur_votre_serveur_kimsufi/">Installer OpenBSD sur votre serveur Kimsufi</a></li>
+								
+									<li class="nav-item current"><a href="/systeme/installer_et_configurer_nano/">Installer et configurer Nano</a></li>
+								
+									<li class="nav-item "><a href="/systeme/configurer_ssh/">Configurer SSH</a></li>
+								
+									<li class="nav-item "><a href="/systeme/configurer_doas/">Configurer DOAS</a></li>
+								
+									<li class="nav-item "><a href="/systeme/configuration_minimale_de_packetfilter/">Configuration minimale de PacketFilter</a></li>
+								
+									<li class="nav-item "><a href="/systeme/afficher_ou_changer_le_hostname/">Afficher / Changer le hostname</a></li>
+								
+							</ul>
+						</li>
+					
+						<li class="nav-item top-level ">
+							
+							<a href="/torrent/installer_et_configurer_transmission/">Torrent</a>
+							<ul>
+								
+									<li class="nav-item "><a href="/torrent/installer_et_configurer_transmission/">Installer et configurer Transmission</a></li>
+								
+							</ul>
+						</li>
+					
+						<li class="nav-item top-level ">
+							
+							<a href="/web/installer_et_configurer_un_serveur_http_ssl_et_php/">Web</a>
+							<ul>
+								
+									<li class="nav-item "><a href="/web/installer_et_configurer_un_serveur_http_ssl_et_php/">Installer et configurer un serveur HTTP + SSL et PHP</a></li>
+								
+									<li class="nav-item "><a href="/web/creer_une_base_de_donnees_sql_avec_mariadb/">Créer une base de données SQL avec MariaDB</a></li>
+								
+									<li class="nav-item "><a href="/web/installer_nextcloud_11/">Installer NextCloud 11</a></li>
+								
+									<li class="nav-item "><a href="/web/utiliser_relayd_en_tant_que_reverse_proxy/">Utiliser relayd en tant que Reverse Proxy</a></li>
+								
+							</ul>
+						</li>
+					
+				</ul>
+
+				<ul>
+					<li class="nav-item top-level ">
+						
+						<a href="/changelog/">Change Log</a>
+					</li>
+				</ul>
+			</nav>
+		</header>
+
+		<section class="main">
+			<div class="page-header">
+				<h2>Système</h2>
+				<h3>Installer et configurer Nano</h3>
+			</div>
+			<article class="content">
+				<p>Tout d’abords, installons Nano.</p>
+
+<blockquote>
+  <p>pkg_add nano</p>
+</blockquote>
+
+<p>Nous cherchons ensuite où est caché Nano.</p>
+
+<blockquote>
+  <p>find / -name “nano”</p>
+</blockquote>
+
+<div class="highlighter-rouge"><pre class="highlight"><code># find / -name "nano"
+/usr/local/bin/nano
+/usr/local/share/doc/nano
+/usr/local/share/examples/nano
+/usr/local/share/nano
+</code></pre>
+</div>
+
+<p>Puis copions un exemple de fichier de configure dans le répertoire home de l’utilisateur souhaité.</p>
+
+<blockquote>
+  <p>cp /usr/local/share/examples/nano/nanorc.sample ~/.nanorc</p>
+</blockquote>
+
+<p>Et enfin nous éditions ce fameux fichier de configuration.</p>
+
+<blockquote>
+  <p>nano ~/.nanorc</p>
+</blockquote>
+
+<p>Dans ce fichier, nous pouvons par exemple activer les choses suivantes.</p>
+
+<p>Activer l’auto-indentation avec <code class="highlighter-rouge">set autoindent</code>.</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>## Use auto-indentation.
+set autoindent
+</code></pre>
+</div>
+
+<p>Activer la souris en mode console dans Nano (si disponible par l’OS) avec <code class="highlighter-rouge">set mouse</code>.</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>## Enable mouse support, if available for your system.  When enabled,
+## mouse clicks can be used to place the cursor, set the mark (with a
+## double click), and execute shortcuts.  The mouse will work in the X
+## Window System, and on the console when gpm is running.
+set mouse
+</code></pre>
+</div>
+
+<p>Puis on active la coloration syntaxique avec <code class="highlighter-rouge">include "/usr/local/share/nano/*.nanorc"</code>. Cette option est géniale car elle permet d’inclure toutes les colorations en une seule fois.</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>## to set the background color to black or white.
+##
+## All regexes should be extended regular expressions.
+##
+## If you wish, you may put your syntax definitions in separate files.
+## You can make use of such files as follows:
+##
+## include "/path/to/syntax_file.nanorc"
+##
+## Unless otherwise noted, the name of the syntax file (without the
+## ".nanorc" extension) should be the same as the "short description"
+## name inside that file.  These names are kept fairly short to make
+## them easier to remember and faster to type using nano's -Y option.
+##
+## To include all existing syntax definitions, you can do:
+include "/usr/local/share/nano/*.nanorc"
+</code></pre>
+</div>
+
+<p>Et on enregistre avec la combinaison de touche <code class="highlighter-rouge">CTRL + X</code> et on répond <code class="highlighter-rouge">Y</code>.</p>
+
+<p>Pour afficher le nombre de ligne dans Nano, on utilise la commande suivante <code class="highlighter-rouge">nano -c</code>.</p>
+
+<blockquote>
+  <p>nano -c ~/.nanorc</p>
+</blockquote>
+
+			</article>
+		</section>
+
+		<script>
+			document.getElementById("open-nav").addEventListener("click", function () {
+				document.body.classList.toggle("nav-open");
+			});
+		</script>
+	</body>
+</html>
