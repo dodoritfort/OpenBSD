@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<meta name="generator" content="Jekyll v3.3.1">
+
+		<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Merriweather:400,400italic,700,700italic|Open+Sans:400,400italic,600,600italic,700,700italic|Inconsolata:400,700">
+		<link rel="stylesheet" href="/css/main.css">
+		<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+		<link rel="icon" type="image/png" href="/touch-icon.png" sizes="192x192">
+		<link rel="icon" type="image/png" href="/images/favicon.png">
+
+		<link type="application/atom+xml" rel="alternate" href="http://localhost:4000/feed.xml" title="OpenBSD" />
+		<!-- Begin Jekyll SEO tag v2.0.0 -->
+<title>Créer un serveur VPN avec OpenVPN - OpenBSD</title>
+<meta property="og:title" content="Créer un serveur VPN avec OpenVPN" />
+<meta name="description" content="  pkg_add -i openvpn openvpn_bsdauth easy-rsa" />
+<meta property="og:description" content="  pkg_add -i openvpn openvpn_bsdauth easy-rsa" />
+<link rel="canonical" href="http://localhost:4000/reseau/creer_un_serveur_vpn_avec_openvpn/" />
+<meta property="og:url" content="http://localhost:4000/reseau/creer_un_serveur_vpn_avec_openvpn/" />
+<meta property="og:site_name" content="OpenBSD" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2017-05-02T19:55:55+02:00" />
+<script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "Article",
+    "headline": "Créer un serveur VPN avec OpenVPN",
+    "datePublished": "2017-05-02T19:55:55+02:00",
+    "description": "  pkg_add -i openvpn openvpn_bsdauth easy-rsa",
+    "logo": "http://localhost:4000/siteicon.png",
+    "url": "http://localhost:4000/reseau/creer_un_serveur_vpn_avec_openvpn/"
+  }
+</script>
+<!-- End Jekyll SEO tag -->
+
+		
+	</head>
+
+	<body>
+		<header>
+			<h1>
+				<a href="/"><img src="/images/emblem.svg" width="40" height="40" alt="OpenBSD logo"></a>
+				OpenBSD
+				<button type="button" class="open-nav" id="open-nav"></button>
+			</h1>
+
+			<form action="/search/" method="get">
+				<input type="text" name="q" id="search-input" placeholder="Search" autofocus>
+				<input type="submit" value="Search" style="display: none;">
+			</form>
+
+			<nav class="full-navigation">
+				<ul>
+					<li class="nav-item top-level ">
+						
+						<a href="/">Bienvenue</a>
+					</li>
+				</ul>
+
+				<ul>
+					
+					
+						<li class="nav-item top-level ">
+							
+							<a href="/maintenance/monter_les_partitions_openbsd_sous_freebsd11-0_rescue/">Maintenance</a>
+							<ul>
+								
+									<li class="nav-item "><a href="/maintenance/monter_les_partitions_openbsd_sous_freebsd11-0_rescue/">Monter les partitions OpenBSD sous FreeBSD11.0-Rescue</a></li>
+								
+									<li class="nav-item "><a href="/maintenance/installer_les_headers_X_manquants/">Installer les headers X manquants</a></li>
+								
+							</ul>
+						</li>
+					
+						<li class="nav-item top-level ">
+							
+							<a href="/messagerie/installer_le_serveur_de_messagerie_instantanee_prosody_xmpp/">Messagerie</a>
+							<ul>
+								
+									<li class="nav-item "><a href="/messagerie/installer_le_serveur_de_messagerie_instantanee_prosody_xmpp/">Installer le serveur de messagerie Prosody (XMPP)</a></li>
+								
+							</ul>
+						</li>
+					
+						<li class="nav-item top-level current">
+							
+							<a href="/reseau/creer_son_propre_serveur_dns_avec_unbound/">Réseau</a>
+							<ul>
+								
+									<li class="nav-item "><a href="/reseau/creer_son_propre_serveur_dns_avec_unbound/">Créer son propre serveur DNS avec Unbound</a></li>
+								
+									<li class="nav-item current"><a href="/reseau/creer_un_serveur_vpn_avec_openvpn/">Créer un serveur VPN avec OpenVPN</a></li>
+								
+							</ul>
+						</li>
+					
+						<li class="nav-item top-level ">
+							
+							<a href="/systeme/installer_openbsd_6-0_sur_votre_serveur_kimsufi/">Système</a>
+							<ul>
+								
+									<li class="nav-item "><a href="/systeme/installer_openbsd_6-0_sur_votre_serveur_kimsufi/">Installer OpenBSD sur votre serveur Kimsufi</a></li>
+								
+									<li class="nav-item "><a href="/systeme/installer_et_configurer_nano/">Installer et configurer Nano</a></li>
+								
+									<li class="nav-item "><a href="/systeme/configurer_ssh/">Configurer SSH</a></li>
+								
+									<li class="nav-item "><a href="/systeme/configurer_doas/">Configurer DOAS</a></li>
+								
+									<li class="nav-item "><a href="/systeme/configuration_minimale_de_packetfilter/">Configuration minimale de PacketFilter</a></li>
+								
+									<li class="nav-item "><a href="/systeme/afficher_ou_changer_le_hostname/">Afficher / Changer le hostname</a></li>
+								
+							</ul>
+						</li>
+					
+						<li class="nav-item top-level ">
+							
+							<a href="/torrent/installer_et_configurer_transmission/">Torrent</a>
+							<ul>
+								
+									<li class="nav-item "><a href="/torrent/installer_et_configurer_transmission/">Installer et configurer Transmission</a></li>
+								
+							</ul>
+						</li>
+					
+						<li class="nav-item top-level ">
+							
+							<a href="/web/installer_et_configurer_un_serveur_http_ssl_et_php/">Web</a>
+							<ul>
+								
+									<li class="nav-item "><a href="/web/installer_et_configurer_un_serveur_http_ssl_et_php/">Installer et configurer un serveur HTTP + SSL et PHP</a></li>
+								
+									<li class="nav-item "><a href="/web/creer_une_base_de_donnees_sql_avec_mariadb/">Créer une base de données SQL avec MariaDB</a></li>
+								
+									<li class="nav-item "><a href="/web/installer_nextcloud_11/">Installer NextCloud 11</a></li>
+								
+									<li class="nav-item "><a href="/web/utiliser_relayd_en_tant_que_reverse_proxy/">Utiliser relayd en tant que Reverse Proxy</a></li>
+								
+							</ul>
+						</li>
+					
+				</ul>
+
+				<ul>
+					<li class="nav-item top-level ">
+						
+						<a href="/changelog/">Change Log</a>
+					</li>
+				</ul>
+			</nav>
+		</header>
+
+		<section class="main">
+			<div class="page-header">
+				<h2>Réseau</h2>
+				<h3>Créer un serveur VPN avec OpenVPN</h3>
+			</div>
+			<article class="content">
+				<blockquote>
+  <p>pkg_add -i openvpn openvpn_bsdauth easy-rsa</p>
+</blockquote>
+
+<div class="highlighter-rouge"><pre class="highlight"><code># pkg_add -i openvpn openvpn_bsdauth easy-rsa
+quirks-2.241 signed on 2016-07-26T16:56:10Z
+openvpn-2.3.11:lzo2-2.09: ok
+openvpn-2.3.11: ok
+openvpn_bsdauth-7p0: ok
+easy-rsa-3.0.1:openssl-1.0.2h: ok
+easy-rsa-3.0.1: ok
+Look in /usr/local/share/doc/pkg-readmes for extra documentation.
+--- +openssl-1.0.2h -------------------
+You may wish to add /usr/local/lib/eopenssl/man to /etc/man.conf
+</code></pre>
+</div>
+
+<blockquote>
+  <p>install -m 700 -d /etc/openvpn/private</p>
+</blockquote>
+
+<blockquote>
+  <p>install -m 755 -d /etc/openvpn/certs</p>
+</blockquote>
+
+<blockquote>
+  <p>install -m 755 -d /var/log/openvpn</p>
+</blockquote>
+
+<blockquote>
+  <p>mkdir -p /tmp/openvpn</p>
+</blockquote>
+
+<blockquote>
+  <p>cd /tmp/openvpn</p>
+</blockquote>
+
+<blockquote>
+  <p>cp -r /usr/local/share/easy-rsa/* .</p>
+</blockquote>
+
+<blockquote>
+  <p>cp vars.example vars</p>
+</blockquote>
+
+<blockquote>
+  <p>nano vars</p>
+</blockquote>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>set_var EASYRSA_REQ_COUNTRY     "FR"
+set_var EASYRSA_REQ_PROVINCE    "France"
+set_var EASYRSA_REQ_CITY        "Roubaix"
+set_var EASYRSA_REQ_ORG         "votredomaine.fr"
+set_var EASYRSA_REQ_EMAIL       "openvpn@votredomaine.fr"
+set_var EASYRSA_REQ_OU          "votredomaine.fr"
+
+set_var EASYRSA_KEY_SIZE        4096
+</code></pre>
+</div>
+
+<blockquote>
+  <p>./easyrsa init-pki</p>
+</blockquote>
+
+<div class="highlighter-rouge"><pre class="highlight"><code># ./easyrsa init-pki
+
+Note: using Easy-RSA configuration from: ./vars
+
+init-pki complete; you may now create a CA or requests.
+Your newly created PKI dir is: /tmp/openvpn/pki
+</code></pre>
+</div>
+
+<blockquote>
+  <p>./easyrsa build-ca nopass</p>
+</blockquote>
+
+<div class="highlighter-rouge"><pre class="highlight"><code># ./easyrsa build-ca nopass
+
+Note: using Easy-RSA configuration from: ./vars
+Generating a 4096 bit RSA private key
+................................++
+........................++
+writing new private key to '/tmp/openvpn/pki/private/ca.key.vzoRmOw16U'
+-----
+You are about to be asked to enter information that will be incorporated
+into your certificate request.
+What you are about to enter is what is called a Distinguished Name or a DN.
+There are quite a few fields but you can leave some blank
+For some fields there will be a default value,
+If you enter '.', the field will be left blank.
+-----
+Common Name (eg: your user, host, or server name) [Easy-RSA CA]:
+
+CA creation complete and you may now import and sign cert requests.
+Your new CA certificate file for publishing is at:
+/tmp/openvpn/pki/ca.crt
+</code></pre>
+</div>
+
+<blockquote>
+  <p>./easyrsa build-server-full server nopass</p>
+</blockquote>
+
+<div class="highlighter-rouge"><pre class="highlight"><code># ./easyrsa build-server-full server nopass
+
+Note: using Easy-RSA configuration from: ./vars
+Generating a 4096 bit RSA private key
+................................................................++
+........................................................................................................................++
+writing new private key to '/tmp/openvpn/pki/private/server.key.ZwVuZpJIRM'
+-----
+Using configuration from /tmp/openvpn/openssl-1.0.cnf
+Check that the request matches the signature
+Signature ok
+The Subject's Distinguished Name is as follows
+commonName            :ASN.1 12:'server'
+Certificate is to be certified until Apr  3 17:01:11 2027 GMT (3650 days)
+
+Write out database with 1 new entries
+Data Base Updated
+</code></pre>
+</div>
+
+<blockquote>
+  <p>./easyrsa gen-dh</p>
+</blockquote>
+
+<div class="highlighter-rouge"><pre class="highlight"><code># ./easyrsa gen-dh
+
+Note: using Easy-RSA configuration from: ./vars
+Generating DH parameters, 4096 bit long safe prime, generator 2
+This is going to take a long time
+...............................+.............
+.............................................
+...........+................................
+DH parameters of size 4096 created at /tmp/openvpn/pki/dh.pem
+</code></pre>
+</div>
+
+<blockquote>
+  <p>./easyrsa gen-crl</p>
+</blockquote>
+
+<div class="highlighter-rouge"><pre class="highlight"><code># ./easyrsa gen-crl
+
+Note: using Easy-RSA configuration from: ./vars
+Using configuration from /tmp/openvpn/openssl-1.0.cnf
+
+An updated CRL has been created.
+CRL file: /tmp/openvpn/pki/crl.pem
+</code></pre>
+</div>
+
+<blockquote>
+  <p>chown -R _openvpn:wheel pki/*</p>
+</blockquote>
+
+<blockquote>
+  <p>chmod -R 600 pki/*</p>
+</blockquote>
+
+<blockquote>
+  <p>cd /etc/openvpn</p>
+</blockquote>
+
+<blockquote>
+  <p>cp -p /tmp/openvpn/pki/ca.crt certs/ca.crt</p>
+</blockquote>
+
+<blockquote>
+  <p>cp -p /tmp/openvpn/pki/issued/server.crt certs/server.crt</p>
+</blockquote>
+
+<blockquote>
+  <p>cp -p /tmp/openvpn/pki/private/server.key private/server.key</p>
+</blockquote>
+
+<blockquote>
+  <p>cp -p /tmp/openvpn/pki/dh.pem dh.pem</p>
+</blockquote>
+
+<blockquote>
+  <p>cp -p /tmp/openvpn/pki/crl.pem crl.pem</p>
+</blockquote>
+
+<blockquote>
+  <p>rm -rf /tmp/openvpn</p>
+</blockquote>
+
+<blockquote>
+  <p>nano /etc/openvpn/private/mgmt.pwd</p>
+</blockquote>
+
+<pre><code class="language-Votre_mot_de_passe```">
+&gt; chown root:wheel /etc/openvpn/private/mgmt.pwd
+
+&gt; chmod 600 /etc/openvpn/private/mgmt.pwd
+
+&gt; nano /etc/openvpn/server.conf
+
+</code></pre>
+<h1 id="configuration-reseau">configuration reseau</h1>
+<p>dev tun0
+server 10.8.0.0 255.255.255.0
+push “redirect-gateway def1”</p>
+<h1 id="on-propose-le-resolveur-de-fdn">On propose le resolveur de FDN</h1>
+<h1 id="httpswwwfdnfractionsdns">https://www.fdn.fr/actions/dns/</h1>
+<p>push “dhcp-option DNS 80.67.169.12”</p>
+<h1 id="si-le-serveur-a-son-propre-resolveur">Si le serveur a son propre resolveur</h1>
+<h1 id="push-dhcp-option-dns-10801">push “dhcp-option DNS 10.8.0.1”</h1>
+
+<h1 id="les-certificats">les certificats</h1>
+<p>ca /etc/openvpn/certs/ca.crt
+cert /etc/openvpn/certs/server.crt
+key /etc/openvpn/private/server.key
+dh /etc/openvpn/dh.pem
+crl-verify /etc/openvpn/crl.pem</p>
+
+<h1 id="options-diverses">options diverses</h1>
+<p>comp-lzo
+daemon openvpn
+float
+group _openvpn
+user _openvpn
+ifconfig-pool-persist /var/openvpn/ipp.txt
+keepalive 10 120
+management 127.0.0.1 1195 /etc/openvpn/private/mgmt.pwd
+max-clients 100
+persist-key
+persist-tun
+port 1194
+proto udp</p>
+
+<h1 id="authentification">authentification</h1>
+<p>client-cert-not-required
+username-as-common-name
+script-security 3 system
+auth-user-pass-verify /usr/local/libexec/openvpn_bsdauth via-env
+auth-nocache</p>
+
+<h1 id="journaux">journaux</h1>
+<p>log-append  /var/log/openvpn/openvpn.log
+status /var/log/openvpn/openvpn-status.log
+verb 3</p>
+<div class="highlighter-rouge"><pre class="highlight"><code>
+&gt; chown root:_openvpn /etc/openvpn/server.conf
+
+&gt; chmod 640 /etc/openvpn/server.conf
+
+&gt; nano /etc/pf.conf
+
+</code></pre>
+</div>
+<p>tun_if = “tun0”
+pass out on $ext_if from 10.8.0.0/24 to any nat-to ($ext_if)
+pass in quick on $tun_if keep state</p>
+<div class="highlighter-rouge"><pre class="highlight"><code>
+&gt; pfctl -d
+
+&gt; pfctl -ef /etc/pf.conf
+
+&gt; nano /etc/sysctl.conf
+
+</code></pre>
+</div>
+<p>net.inet.ip.forwarding=1</p>
+<div class="highlighter-rouge"><pre class="highlight"><code>
+&gt; sysctl net.inet.ip.forwarding=1
+
+&gt; useradd -G _openvpnusers utilisateur
+
+&gt; passwd utilisateur
+
+&gt; nano /etc/hostname.tun0
+
+</code></pre>
+</div>
+<p>up
+!/usr/local/sbin/openvpn –config /etc/openvpn/server.conf</p>
+<div class="highlighter-rouge"><pre class="highlight"><code>
+&gt; sh /etc/netstart
+
+&gt; tail -f /var/log/openvpn/*
+
+&gt; kill -9 $(pgrep openvpn)
+
+&gt; cat /etc/openvpn/certs/ca.crt
+
+</code></pre>
+</div>
+<p>—–BEGIN CERTIFICATE—–
+MIIDQTCCAimgAwIBAgIJAOwa/Yq2rNGJMA0GCSqGSIb3DQEBCwUAMBoxGDAWBgNV
+……….
+OxjoYBwhWgWq/avx6qprB/HklcI6O7tjApGgbgSZNcTNrqu17xUftCxKthgqQfzt
+TTzpUC8e3es1Dvrq+pYs4wYY3mqp
+—–END CERTIFICATE—–</p>
+<div class="highlighter-rouge"><pre class="highlight"><code>
+Côté client (Windows 7), télécharger et installer OpenVPN sur le site officiel : [https://openvpn.net/index.php/open-source/downloads.html](https://openvpn.net/index.php/open-source/downloads.html)
+
+Créer un dossier et créer dedans un fichier `votredomaine.fr.ovpn` avec le contenu suivant.
+
+</code></pre>
+</div>
+<p>client
+dev tun0
+proto udp
+remote 5.39.83.4 1194
+ca [inline]
+auth-user-pass
+comp-lzo
+auth-nocache</p>
+
+<ca>
+-----BEGIN CERTIFICATE-----
+MIIDQTCCAimgAwIBAgIJAOwa/Yq2rNGJMA0GCSqGSIb3DQEBCwUAMBoxGDAWBgNV
+..........
+OxjoYBwhWgWq/avx6qprB/HklcI6O7tjApGgbgSZNcTNrqu17xUftCxKthgqQfzt
+TTzpUC8e3es1Dvrq+pYs4wYY3mqp
+-----END CERTIFICATE-----
+</ca>
+
+<p>auth-user-pass user-pass.txt</p>
+<div class="highlighter-rouge"><pre class="highlight"><code>Dans ce même dossier, créer un second fichier nommé `user-pass.txt` contenant le compte utilisateur créé ci-dessus.
+
+</code></pre>
+</div>
+<p>monuservpn
+monpasswordvpn
+```</p>
+
+<p>Importer ensuite la configuration dans OpenVPN GUI.</p>
+
+			</article>
+		</section>
+
+		<script>
+			document.getElementById("open-nav").addEventListener("click", function () {
+				document.body.classList.toggle("nav-open");
+			});
+		</script>
+	</body>
+</html>

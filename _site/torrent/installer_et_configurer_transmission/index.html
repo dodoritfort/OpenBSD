@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<meta name="generator" content="Jekyll v3.3.1">
+
+		<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Merriweather:400,400italic,700,700italic|Open+Sans:400,400italic,600,600italic,700,700italic|Inconsolata:400,700">
+		<link rel="stylesheet" href="/css/main.css">
+		<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+		<link rel="icon" type="image/png" href="/touch-icon.png" sizes="192x192">
+		<link rel="icon" type="image/png" href="/images/favicon.png">
+
+		<link type="application/atom+xml" rel="alternate" href="http://localhost:4000/feed.xml" title="OpenBSD" />
+		<!-- Begin Jekyll SEO tag v2.0.0 -->
+<title>Installer et configurer Transmission - OpenBSD</title>
+<meta property="og:title" content="Installer et configurer Transmission" />
+<meta name="description" content="Introduction" />
+<meta property="og:description" content="Introduction" />
+<link rel="canonical" href="http://localhost:4000/torrent/installer_et_configurer_transmission/" />
+<meta property="og:url" content="http://localhost:4000/torrent/installer_et_configurer_transmission/" />
+<meta property="og:site_name" content="OpenBSD" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2017-05-02T19:55:55+02:00" />
+<script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "Article",
+    "headline": "Installer et configurer Transmission",
+    "datePublished": "2017-05-02T19:55:55+02:00",
+    "description": "Introduction",
+    "logo": "http://localhost:4000/siteicon.png",
+    "url": "http://localhost:4000/torrent/installer_et_configurer_transmission/"
+  }
+</script>
+<!-- End Jekyll SEO tag -->
+
+		
+	</head>
+
+	<body>
+		<header>
+			<h1>
+				<a href="/"><img src="/images/emblem.svg" width="40" height="40" alt="OpenBSD logo"></a>
+				OpenBSD
+				<button type="button" class="open-nav" id="open-nav"></button>
+			</h1>
+
+			<form action="/search/" method="get">
+				<input type="text" name="q" id="search-input" placeholder="Search" autofocus>
+				<input type="submit" value="Search" style="display: none;">
+			</form>
+
+			<nav class="full-navigation">
+				<ul>
+					<li class="nav-item top-level ">
+						
+						<a href="/">Bienvenue</a>
+					</li>
+				</ul>
+
+				<ul>
+					
+					
+						<li class="nav-item top-level ">
+							
+							<a href="/maintenance/monter_les_partitions_openbsd_sous_freebsd11-0_rescue/">Maintenance</a>
+							<ul>
+								
+									<li class="nav-item "><a href="/maintenance/monter_les_partitions_openbsd_sous_freebsd11-0_rescue/">Monter les partitions OpenBSD sous FreeBSD11.0-Rescue</a></li>
+								
+									<li class="nav-item "><a href="/maintenance/installer_les_headers_X_manquants/">Installer les headers X manquants</a></li>
+								
+							</ul>
+						</li>
+					
+						<li class="nav-item top-level ">
+							
+							<a href="/messagerie/installer_le_serveur_de_messagerie_instantanee_prosody_xmpp/">Messagerie</a>
+							<ul>
+								
+									<li class="nav-item "><a href="/messagerie/installer_le_serveur_de_messagerie_instantanee_prosody_xmpp/">Installer le serveur de messagerie Prosody (XMPP)</a></li>
+								
+							</ul>
+						</li>
+					
+						<li class="nav-item top-level ">
+							
+							<a href="/reseau/creer_son_propre_serveur_dns_avec_unbound/">Réseau</a>
+							<ul>
+								
+									<li class="nav-item "><a href="/reseau/creer_son_propre_serveur_dns_avec_unbound/">Créer son propre serveur DNS avec Unbound</a></li>
+								
+									<li class="nav-item "><a href="/reseau/creer_un_serveur_vpn_avec_openvpn/">Créer un serveur VPN avec OpenVPN</a></li>
+								
+							</ul>
+						</li>
+					
+						<li class="nav-item top-level ">
+							
+							<a href="/systeme/installer_openbsd_6-0_sur_votre_serveur_kimsufi/">Système</a>
+							<ul>
+								
+									<li class="nav-item "><a href="/systeme/installer_openbsd_6-0_sur_votre_serveur_kimsufi/">Installer OpenBSD sur votre serveur Kimsufi</a></li>
+								
+									<li class="nav-item "><a href="/systeme/installer_et_configurer_nano/">Installer et configurer Nano</a></li>
+								
+									<li class="nav-item "><a href="/systeme/configurer_ssh/">Configurer SSH</a></li>
+								
+									<li class="nav-item "><a href="/systeme/configurer_doas/">Configurer DOAS</a></li>
+								
+									<li class="nav-item "><a href="/systeme/configuration_minimale_de_packetfilter/">Configuration minimale de PacketFilter</a></li>
+								
+									<li class="nav-item "><a href="/systeme/afficher_ou_changer_le_hostname/">Afficher / Changer le hostname</a></li>
+								
+							</ul>
+						</li>
+					
+						<li class="nav-item top-level current">
+							
+							<a href="/torrent/installer_et_configurer_transmission/">Torrent</a>
+							<ul>
+								
+									<li class="nav-item current"><a href="/torrent/installer_et_configurer_transmission/">Installer et configurer Transmission</a></li>
+								
+							</ul>
+						</li>
+					
+						<li class="nav-item top-level ">
+							
+							<a href="/web/installer_et_configurer_un_serveur_http_ssl_et_php/">Web</a>
+							<ul>
+								
+									<li class="nav-item "><a href="/web/installer_et_configurer_un_serveur_http_ssl_et_php/">Installer et configurer un serveur HTTP + SSL et PHP</a></li>
+								
+									<li class="nav-item "><a href="/web/creer_une_base_de_donnees_sql_avec_mariadb/">Créer une base de données SQL avec MariaDB</a></li>
+								
+									<li class="nav-item "><a href="/web/installer_nextcloud_11/">Installer NextCloud 11</a></li>
+								
+									<li class="nav-item "><a href="/web/utiliser_relayd_en_tant_que_reverse_proxy/">Utiliser relayd en tant que Reverse Proxy</a></li>
+								
+							</ul>
+						</li>
+					
+				</ul>
+
+				<ul>
+					<li class="nav-item top-level ">
+						
+						<a href="/changelog/">Change Log</a>
+					</li>
+				</ul>
+			</nav>
+		</header>
+
+		<section class="main">
+			<div class="page-header">
+				<h2>Torrent</h2>
+				<h3>Installer et configurer Transmission</h3>
+			</div>
+			<article class="content">
+				<h2 id="introduction">Introduction</h2>
+
+<p>Transmission est un client Bitorrent qui se veut rapide, simple et gratuit.</p>
+
+<p>Il embarque de base une interface web qui permet une gestion conviviale.</p>
+
+<p>Site officiel : https://transmissionbt.com/</p>
+
+<h2 id="installation">Installation</h2>
+
+<p>Pour installer Transmission, rien de plus simple.</p>
+
+<blockquote>
+  <p>pkg_add -i transmission</p>
+</blockquote>
+
+<p>Lors de l’installation, l’utilisateur <code class="highlighter-rouge">_transmission</code> est créé.</p>
+
+<h2 id="configuration">Configuration</h2>
+
+<p>Dans cet exemple, Transmission sera utilisé avec Plex. Pour éviter que Plex n’indexe les fichiers dont le téléchargement n’est pas terminé, il faudra les séparer.</p>
+
+<p>Pour cela, il faudra créer un répertoire <code class="highlighter-rouge">Incomplete</code> et lui attribuer les bons droits.</p>
+
+<blockquote>
+  <p>mkdir /var/transmission/Incomplete</p>
+</blockquote>
+
+<blockquote>
+  <p>chown -R _transmission:_transmission /var/transmission/Incomplete</p>
+</blockquote>
+
+<p>Le fichier de configuration à modifier est <code class="highlighter-rouge">/var/transmission/.config/transmission-daemon/settings.json</code>.</p>
+
+<p>Paramètre	Valeur
+rpc-enabled	Active l’interface Web
+rpc-port	Port de connexion à l’interface Web
+rpc-username	nom d’utilisateur
+rpc-password	mot de passe
+rpc-authentication-required	Active l’authentification de l’interface Web
+rpc-whitelist	Limite l’accès à l’interface web aux adresses IP spécifié
+rpc-whitelist-enabled	Active la limite d’accès à l’interface Web
+download-dir	Répertoire de téléchargement
+incomplete-dir	Répertoire ou seront stocké les fichiers en cours de téléchargement
+incomplete-dir-enabled	Active le répertoire temporaire
+Peer port	Port de téléchargement
+dht-enabled	A désactiver
+pex-enabled	A désactiver</p>
+
+<blockquote>
+  <p>nano /var/transmission/.config/transmission-daemon/settings.json</p>
+</blockquote>
+
+<div class="highlighter-rouge"><pre class="highlight"><code><span class="p">{</span><span class="w">
+    </span><span class="nt">"alt-speed-down"</span><span class="p">:</span><span class="w"> </span><span class="mi">50</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"alt-speed-enabled"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"alt-speed-time-begin"</span><span class="p">:</span><span class="w"> </span><span class="mi">540</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"alt-speed-time-day"</span><span class="p">:</span><span class="w"> </span><span class="mi">127</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"alt-speed-time-enabled"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"alt-speed-time-end"</span><span class="p">:</span><span class="w"> </span><span class="mi">1020</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"alt-speed-up"</span><span class="p">:</span><span class="w"> </span><span class="mi">50</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"bind-address-ipv4"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0.0.0.0"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"bind-address-ipv6"</span><span class="p">:</span><span class="w"> </span><span class="s2">"::"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"blocklist-enabled"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"blocklist-url"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"cache-size-mb"</span><span class="p">:</span><span class="w"> </span><span class="mi">4</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"dht-enabled"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"download-dir"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/var/transmission/Downloads"</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">Dossier</span><span class="w"> </span><span class="err">de</span><span class="w"> </span><span class="err">destination</span><span class="w"> </span><span class="err">des</span><span class="w"> </span><span class="err">téléchargements.</span><span class="w">
+    </span><span class="nt">"download-queue-enabled"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"download-queue-size"</span><span class="p">:</span><span class="w"> </span><span class="mi">5</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"encryption"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"idle-seeding-limit"</span><span class="p">:</span><span class="w"> </span><span class="mi">30</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"idle-seeding-limit-enabled"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"incomplète-dir"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/var/transmission/Incomplete"</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">Dossier</span><span class="w"> </span><span class="err">qui</span><span class="w"> </span><span class="err">contiendra</span><span class="w"> </span><span class="err">les</span><span class="w"> </span><span class="err">téléchargements</span><span class="w"> </span><span class="err">en</span><span class="w"> </span><span class="err">cours.</span><span class="w">
+    </span><span class="nt">"incomplete-dir-enabled"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">Active</span><span class="w"> </span><span class="err">l'option</span><span class="w"> </span><span class="nt">"incomplète-dir"</span><span class="err">.</span><span class="w">
+    </span><span class="nt">"lpd-enabled"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"message-level"</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"peer-congestion-algorithm"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"peer-id-ttl-hours"</span><span class="p">:</span><span class="w"> </span><span class="mi">6</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"peer-limit-global"</span><span class="p">:</span><span class="w"> </span><span class="mi">200</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"peer-limit-per-torrent"</span><span class="p">:</span><span class="w"> </span><span class="mi">50</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"peer-port"</span><span class="p">:</span><span class="w"> </span><span class="mi">51413</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">Le</span><span class="w"> </span><span class="err">port</span><span class="w"> </span><span class="err">à</span><span class="w"> </span><span class="err">ouvrir</span><span class="w"> </span><span class="err">pour</span><span class="w"> </span><span class="err">permettre</span><span class="w"> </span><span class="err">à</span><span class="w"> </span><span class="err">Transmission</span><span class="w"> </span><span class="err">d'accéder</span><span class="w"> </span><span class="err">à</span><span class="w"> </span><span class="err">Internet.</span><span class="w">
+    </span><span class="nt">"peer-port-random-high"</span><span class="p">:</span><span class="w"> </span><span class="mi">65535</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"peer-port-random-low"</span><span class="p">:</span><span class="w"> </span><span class="mi">49152</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"peer-port-random-on-start"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"peer-socket-tos"</span><span class="p">:</span><span class="w"> </span><span class="s2">"default"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"pex-enabled"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"port-forwarding-enabled"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"preallocation"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"prefetch-enabled"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"queue-stalled-enabled"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"queue-stalled-minutes"</span><span class="p">:</span><span class="w"> </span><span class="mi">30</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"ratio-limit"</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"ratio-limit-enabled"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"rename-partial-files"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"rpc-authentication-required"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"rpc-bind-address"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0.0.0.0"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"rpc-enabled"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"rpc-password"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Mot_de_passe"</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">Le</span><span class="w"> </span><span class="err">mot</span><span class="w"> </span><span class="err">de</span><span class="w"> </span><span class="err">passe</span><span class="w"> </span><span class="err">de</span><span class="w"> </span><span class="err">connexion</span><span class="w"> </span><span class="err">(qui</span><span class="w"> </span><span class="err">sera</span><span class="w"> </span><span class="err">crypté</span><span class="w"> </span><span class="err">au</span><span class="w"> </span><span class="err">redémarrage</span><span class="w"> </span><span class="err">de</span><span class="w"> </span><span class="err">Transmission).</span><span class="w">
+    </span><span class="nt">"rpc-port"</span><span class="p">:</span><span class="w"> </span><span class="mi">9091</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">Le</span><span class="w"> </span><span class="err">port</span><span class="w"> </span><span class="err">qui</span><span class="w"> </span><span class="err">permet</span><span class="w"> </span><span class="err">d'établir</span><span class="w"> </span><span class="err">la</span><span class="w"> </span><span class="err">connexion</span><span class="w"> </span><span class="err">à</span><span class="w"> </span><span class="err">Transmission.</span><span class="w">
+    </span><span class="nt">"rpc-url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/transmission/"</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"rpc-username"</span><span class="p">:</span><span class="w"> </span><span class="s2">"transmission"</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">Le</span><span class="w"> </span><span class="err">nom</span><span class="w"> </span><span class="err">d'utilisateur</span><span class="w"> </span><span class="err">pour</span><span class="w"> </span><span class="err">la</span><span class="w"> </span><span class="err">connexion.</span><span class="w">
+    </span><span class="nt">"rpc-whitelist"</span><span class="p">:</span><span class="w"> </span><span class="s2">"127.0.0.1,192.168.1.*"</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">Important</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="err">Les</span><span class="w"> </span><span class="err">adresses</span><span class="w"> </span><span class="err">IP</span><span class="w"> </span><span class="err">autorisées</span><span class="w"> </span><span class="err">à</span><span class="w"> </span><span class="err">se</span><span class="w"> </span><span class="err">connecter</span><span class="w"> </span><span class="err">à</span><span class="w"> </span><span class="err">l'itnerface</span><span class="w"> </span><span class="err">web.</span><span class="w">
+    </span><span class="s2">"rpc-whitelist-enabled"</span><span class="err">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">Cette</span><span class="w"> </span><span class="err">option</span><span class="w"> </span><span class="err">active</span><span class="w"> </span><span class="err">la</span><span class="w"> </span><span class="err">liste</span><span class="w"> </span><span class="err">des</span><span class="w"> </span><span class="err">adresses</span><span class="w"> </span><span class="err">IP</span><span class="w"> </span><span class="err">autorisées.</span><span class="w">
+    </span><span class="nt">"scrape-paused-torrents-enabled"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"script-torrent-done-enabled"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"script-torrent-done-filename"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"seed-queue-enabled"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"seed-queue-size"</span><span class="p">:</span><span class="w"> </span><span class="mi">10</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"speed-limit-down"</span><span class="p">:</span><span class="w"> </span><span class="mi">100</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"speed-limit-down-enabled"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"speed-limit-up"</span><span class="p">:</span><span class="w"> </span><span class="mi">100</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"speed-limit-up-enabled"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"start-added-torrents"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"trash-original-torrent-files"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"umask"</span><span class="p">:</span><span class="w"> </span><span class="mi">18</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"upload-slots-per-torrent"</span><span class="p">:</span><span class="w"> </span><span class="mi">14</span><span class="p">,</span><span class="w">
+    </span><span class="nt">"utp-enabled"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+</div>
+
+<h2 id="premier-démarrage">Premier démarrage</h2>
+
+<p>Pour exécuter Transmission au démarrage du système, il suffit d’exécuter la commande suivante.</p>
+
+<blockquote>
+  <p>rcctl enable transmission_daemon</p>
+</blockquote>
+
+<p>Et pour démarrer Transmission manuellement.</p>
+
+<blockquote>
+  <p>rcctl start transmission_daemon</p>
+</blockquote>
+
+<p>Ensuite, il suffit de se connecter à l’interface web de Transmission.</p>
+
+<p>http://votre_serveur:9091/</p>
+
+<ul>
+  <li>Attention, il faut absolument se connecter depuis une adresse IP autorisée ! L’adresse IP ou la plage réseau a été définie dans le fichier de configuration.</li>
+  <li>De même que si le port par défaut d’accès à l’interface à été modifié, il faudra le prendre en considération.</li>
+  <li>Ne pas oublier non plus d’ouvrir le port de téléchargement (par défaut 51413) sur votre routeur ou parefeu.</li>
+</ul>
+
+			</article>
+		</section>
+
+		<script>
+			document.getElementById("open-nav").addEventListener("click", function () {
+				document.body.classList.toggle("nav-open");
+			});
+		</script>
+	</body>
+</html>

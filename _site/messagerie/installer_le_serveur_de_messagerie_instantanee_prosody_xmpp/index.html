@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<meta name="generator" content="Jekyll v3.3.1">
+
+		<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Merriweather:400,400italic,700,700italic|Open+Sans:400,400italic,600,600italic,700,700italic|Inconsolata:400,700">
+		<link rel="stylesheet" href="/css/main.css">
+		<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+		<link rel="icon" type="image/png" href="/touch-icon.png" sizes="192x192">
+		<link rel="icon" type="image/png" href="/images/favicon.png">
+
+		<link type="application/atom+xml" rel="alternate" href="http://localhost:4000/feed.xml" title="OpenBSD" />
+		<!-- Begin Jekyll SEO tag v2.0.0 -->
+<title>Installer le serveur de messagerie Prosody (XMPP) - OpenBSD</title>
+<meta property="og:title" content="Installer le serveur de messagerie Prosody (XMPP)" />
+<meta name="description" content="Installer le serveur de messagerie Prosody (XMPP)" />
+<meta property="og:description" content="Installer le serveur de messagerie Prosody (XMPP)" />
+<link rel="canonical" href="http://localhost:4000/messagerie/installer_le_serveur_de_messagerie_instantanee_prosody_xmpp/" />
+<meta property="og:url" content="http://localhost:4000/messagerie/installer_le_serveur_de_messagerie_instantanee_prosody_xmpp/" />
+<meta property="og:site_name" content="OpenBSD" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2017-05-02T19:55:55+02:00" />
+<script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "Article",
+    "headline": "Installer le serveur de messagerie Prosody (XMPP)",
+    "datePublished": "2017-05-02T19:55:55+02:00",
+    "description": "Installer le serveur de messagerie Prosody (XMPP)",
+    "logo": "http://localhost:4000/siteicon.png",
+    "url": "http://localhost:4000/messagerie/installer_le_serveur_de_messagerie_instantanee_prosody_xmpp/"
+  }
+</script>
+<!-- End Jekyll SEO tag -->
+
+		
+	</head>
+
+	<body>
+		<header>
+			<h1>
+				<a href="/"><img src="/images/emblem.svg" width="40" height="40" alt="OpenBSD logo"></a>
+				OpenBSD
+				<button type="button" class="open-nav" id="open-nav"></button>
+			</h1>
+
+			<form action="/search/" method="get">
+				<input type="text" name="q" id="search-input" placeholder="Search" autofocus>
+				<input type="submit" value="Search" style="display: none;">
+			</form>
+
+			<nav class="full-navigation">
+				<ul>
+					<li class="nav-item top-level ">
+						
+						<a href="/">Bienvenue</a>
+					</li>
+				</ul>
+
+				<ul>
+					
+					
+						<li class="nav-item top-level ">
+							
+							<a href="/maintenance/monter_les_partitions_openbsd_sous_freebsd11-0_rescue/">Maintenance</a>
+							<ul>
+								
+									<li class="nav-item "><a href="/maintenance/monter_les_partitions_openbsd_sous_freebsd11-0_rescue/">Monter les partitions OpenBSD sous FreeBSD11.0-Rescue</a></li>
+								
+									<li class="nav-item "><a href="/maintenance/installer_les_headers_X_manquants/">Installer les headers X manquants</a></li>
+								
+							</ul>
+						</li>
+					
+						<li class="nav-item top-level current">
+							
+							<a href="/messagerie/installer_le_serveur_de_messagerie_instantanee_prosody_xmpp/">Messagerie</a>
+							<ul>
+								
+									<li class="nav-item current"><a href="/messagerie/installer_le_serveur_de_messagerie_instantanee_prosody_xmpp/">Installer le serveur de messagerie Prosody (XMPP)</a></li>
+								
+							</ul>
+						</li>
+					
+						<li class="nav-item top-level ">
+							
+							<a href="/reseau/creer_son_propre_serveur_dns_avec_unbound/">Réseau</a>
+							<ul>
+								
+									<li class="nav-item "><a href="/reseau/creer_son_propre_serveur_dns_avec_unbound/">Créer son propre serveur DNS avec Unbound</a></li>
+								
+									<li class="nav-item "><a href="/reseau/creer_un_serveur_vpn_avec_openvpn/">Créer un serveur VPN avec OpenVPN</a></li>
+								
+							</ul>
+						</li>
+					
+						<li class="nav-item top-level ">
+							
+							<a href="/systeme/installer_openbsd_6-0_sur_votre_serveur_kimsufi/">Système</a>
+							<ul>
+								
+									<li class="nav-item "><a href="/systeme/installer_openbsd_6-0_sur_votre_serveur_kimsufi/">Installer OpenBSD sur votre serveur Kimsufi</a></li>
+								
+									<li class="nav-item "><a href="/systeme/installer_et_configurer_nano/">Installer et configurer Nano</a></li>
+								
+									<li class="nav-item "><a href="/systeme/configurer_ssh/">Configurer SSH</a></li>
+								
+									<li class="nav-item "><a href="/systeme/configurer_doas/">Configurer DOAS</a></li>
+								
+									<li class="nav-item "><a href="/systeme/configuration_minimale_de_packetfilter/">Configuration minimale de PacketFilter</a></li>
+								
+									<li class="nav-item "><a href="/systeme/afficher_ou_changer_le_hostname/">Afficher / Changer le hostname</a></li>
+								
+							</ul>
+						</li>
+					
+						<li class="nav-item top-level ">
+							
+							<a href="/torrent/installer_et_configurer_transmission/">Torrent</a>
+							<ul>
+								
+									<li class="nav-item "><a href="/torrent/installer_et_configurer_transmission/">Installer et configurer Transmission</a></li>
+								
+							</ul>
+						</li>
+					
+						<li class="nav-item top-level ">
+							
+							<a href="/web/installer_et_configurer_un_serveur_http_ssl_et_php/">Web</a>
+							<ul>
+								
+									<li class="nav-item "><a href="/web/installer_et_configurer_un_serveur_http_ssl_et_php/">Installer et configurer un serveur HTTP + SSL et PHP</a></li>
+								
+									<li class="nav-item "><a href="/web/creer_une_base_de_donnees_sql_avec_mariadb/">Créer une base de données SQL avec MariaDB</a></li>
+								
+									<li class="nav-item "><a href="/web/installer_nextcloud_11/">Installer NextCloud 11</a></li>
+								
+									<li class="nav-item "><a href="/web/utiliser_relayd_en_tant_que_reverse_proxy/">Utiliser relayd en tant que Reverse Proxy</a></li>
+								
+							</ul>
+						</li>
+					
+				</ul>
+
+				<ul>
+					<li class="nav-item top-level ">
+						
+						<a href="/changelog/">Change Log</a>
+					</li>
+				</ul>
+			</nav>
+		</header>
+
+		<section class="main">
+			<div class="page-header">
+				<h2>Messagerie</h2>
+				<h3>Installer le serveur de messagerie Prosody (XMPP)</h3>
+			</div>
+			<article class="content">
+				<h1 id="installer-le-serveur-de-messagerie-prosody-xmpp">Installer le serveur de messagerie Prosody (XMPP)</h1>
+
+<p>Prosody est un serveur de messagerie instantanée XMPP écrit en LUA. Ses objectifs sont d’être simple à configurer, d’être modulaire et de consommer peu de ressource système.</p>
+
+<h2 id="installation">Installation</h2>
+
+<p>Rien de plus simple pour l’installer ! Il suffit d’exécuter la commande suivante.</p>
+
+<blockquote>
+  <p>pkg_add -i prosody</p>
+</blockquote>
+
+<div class="highlighter-rouge"><pre class="highlight"><code># pkg_add -i prosody
+quirks-2.241 signed on 2016-07-26T16:56:10Z
+prosody-0.9.10p2:libidn-1.32p1: ok
+prosody-0.9.10p2:lua-5.1.5p6: ok
+prosody-0.9.10p2:luafs-1.6.3p0: ok
+prosody-0.9.10p2:luadbi-0.5p0: ok
+prosody-0.9.10p2:luazlib-20100731p2: ok
+prosody-0.9.10p2:luasocket-3.0rc1p1: ok
+prosody-0.9.10p2:luasec-0.6p0: ok
+prosody-0.9.10p2:luaexpat-1.3.0p0: ok
+prosody-0.9.10p2: ok
+The following new rcscripts were installed: /etc/rc.d/prosody
+See rcctl(8) for details.
+Look in /usr/local/share/doc/pkg-readmes for extra documentation.
+</code></pre>
+</div>
+
+<h2 id="configuration-minimale">Configuration minimale</h2>
+
+<p>Une fois l’installation effectuée, il faut éditer le fichier de configuration <code class="highlighter-rouge">prosody.cfg.lua</code>.</p>
+
+<p>A savoir que le double-tiret <code class="highlighter-rouge">--</code> sert à commenter les lignes.</p>
+
+<blockquote>
+  <p>nano /etc/prosody/prosody.cfg.lua</p>
+</blockquote>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>-- VirtualHost "localhost"
+VirtualHost "votredomaine.fr"
+</code></pre>
+</div>
+
+<p>Documentation : https://prosody.im/doc/configure</p>
+
+<h2 id="premier-démarrage">Premier démarrage</h2>
+
+<p>Après avoir configuré notre domaine, nous pouvons dès à présent démarrer notre serveur prosody.</p>
+
+<blockquote>
+  <p>rcctl start prosody</p>
+</blockquote>
+
+<p>Nous vérifions ensuite que le service est bien démarré.</p>
+
+<blockquote>
+  <p>prosodyctl status</p>
+</blockquote>
+
+<div class="highlighter-rouge"><pre class="highlight"><code># prosodyctl status
+Prosody is running with PID 99255
+</code></pre>
+</div>
+
+<p>Pour qu’il soit exécuté à chaque démarrage, nous devons l’activer.</p>
+
+<blockquote>
+  <p>rcctl enable prosody</p>
+</blockquote>
+
+<p>Documentation : https://prosody.im/doc/prosodyctl</p>
+
+<h2 id="ajouter-un-utilisateur">Ajouter un utilisateur</h2>
+
+<p>Par défaut, l’option de création de compte via un client XMPP est désactivée. Il s’agit de la ligne <code class="highlighter-rouge">allow_registration = false;</code> du fichier de configuration.</p>
+
+<p>Nous devons donc le créer manuellement via la commande suivante où <code class="highlighter-rouge">votredomaine.fr</code> est celui que nous avons spécifié dans le <code class="highlighter-rouge">VirtualHost</code> du fichier de configuration.</p>
+
+<blockquote>
+  <p>prosodyctl adduser user@votredomaine.fr</p>
+</blockquote>
+
+<p>Nous pouvons ensuite nous connecter avec le client XMPP de notre choix et vérifier le fichier log.</p>
+
+<blockquote>
+  <p>cat /var/prosody/prosody.log</p>
+</blockquote>
+
+<div class="highlighter-rouge"><pre class="highlight"><code># cat /var/prosody/prosody.log
+Mar 25 11:48:13 general info    Hello and welcome to Prosody version 0.9.10
+Mar 25 11:48:13 general info    Prosody is using the select backend for connection handling
+Mar 25 11:48:13 portmanager     info    Activated service 'c2s' on [::]:5222, [*]:5222
+Mar 25 11:48:13 portmanager     info    Activated service 'legacy_ssl' on no ports
+Mar 25 11:48:13 portmanager     info    Activated service 's2s' on [::]:5269, [*]:5269
+Mar 25 11:48:13 mod_posix       info    Prosody is about to detach from the console, disabling further console output
+Mar 25 11:48:13 mod_posix       info    Successfully daemonized to PID 5826
+Mar 25 11:49:16 c2s107ce75ddf80 info    Client connected
+Mar 25 11:49:20 c2s107ce75ddf80 info    Authenticated as user@votredomaine.fr
+Mar 25 11:49:37 c2s107ce75ddf80 info    Client disconnected: closed
+</code></pre>
+</div>
+
+<p>Pour changer le mot de passe d’un utilisateur.</p>
+
+<blockquote>
+  <p>prosodyctl passwd user@votredomaine.fr</p>
+</blockquote>
+
+<p>Pour supprimer un utilisateur.</p>
+
+<blockquote>
+  <p>prosodyctl deluser user@votredomaine.fr</p>
+</blockquote>
+
+<p>Documentation : http://prosody.im/doc/creating_accounts</p>
+
+<h2 id="configurer-le-mode-ssl">Configurer le mode SSL</h2>
+
+<p>Commençons par générer le certificat.</p>
+
+<blockquote>
+  <p>prosodyctl cert generate votredomaine.fr</p>
+</blockquote>
+
+<div class="highlighter-rouge"><pre class="highlight"><code># prosodyctl cert generate votredomaine.fr
+Choose key size (2048): 2048
+Generating RSA private key, 2048 bit long modulus
+...............................................+++
+...........................+++
+e is 65537 (0x10001)
+Key written to /var/prosody/votredomaine.fr.key
+Please provide details to include in the certificate config file.
+Leave the field empty to use the default value or '.' to exclude the field.
+countryName (GB): FR
+localityName (The Internet):
+organizationName (Your Organisation):
+organizationalUnitName (XMPP Department):
+commonName (votredomaine.fr):
+emailAddress (xmpp@votredomaine.fr):
+
+Config written to /var/prosody/votredomaine.fr.cnf
+Certificate written to /var/prosody/votredomaine.fr.crt
+</code></pre>
+</div>
+
+<p>Puis spécifions cela dans le fichier de configuration.</p>
+
+<blockquote>
+  <p>nano /etc/prosody/prosody.cfg.lua</p>
+</blockquote>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>-- These are the SSL/TLS-related settings. If you don't want
+-- to use SSL/TLS, you may comment or remove this
+ssl = {
+        key = "/var/prosody/votredomaine.fr.key";
+        certificate = "/var/prosody/votredomaine.fr.crt";
+}
+</code></pre>
+</div>
+
+<p>Ensuite on recharge la configuration et on redémarre le serveur.</p>
+
+<blockquote>
+  <p>prosodyctl reload</p>
+</blockquote>
+
+<div class="highlighter-rouge"><pre class="highlight"><code># prosodyctl reload
+Prosody log files re-opened and config file reloaded. You may need to reload modules for some changes to take effect.
+</code></pre>
+</div>
+
+<blockquote>
+  <p>prosodyctl restart</p>
+</blockquote>
+
+<div class="highlighter-rouge"><pre class="highlight"><code># prosodyctl restart
+Stopped
+Started
+</code></pre>
+</div>
+
+<p>Documentation : https://prosody.im/doc/certificates</p>
+
+			</article>
+		</section>
+
+		<script>
+			document.getElementById("open-nav").addEventListener("click", function () {
+				document.body.classList.toggle("nav-open");
+			});
+		</script>
+	</body>
+</html>

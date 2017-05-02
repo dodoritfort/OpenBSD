@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<meta name="generator" content="Jekyll v3.3.1">
+
+		<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Merriweather:400,400italic,700,700italic|Open+Sans:400,400italic,600,600italic,700,700italic|Inconsolata:400,700">
+		<link rel="stylesheet" href="/css/main.css">
+		<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+		<link rel="icon" type="image/png" href="/touch-icon.png" sizes="192x192">
+		<link rel="icon" type="image/png" href="/images/favicon.png">
+
+		<link type="application/atom+xml" rel="alternate" href="http://localhost:4000/feed.xml" title="OpenBSD" />
+		<!-- Begin Jekyll SEO tag v2.0.0 -->
+<title>Installer NextCloud 11 - OpenBSD</title>
+<meta property="og:title" content="Installer NextCloud 11" />
+<meta name="description" content="Pour commencer, nous avons besoin de l’outil wget pour télécharger l’archive NextCloud. Commençons donc par l’installer." />
+<meta property="og:description" content="Pour commencer, nous avons besoin de l’outil wget pour télécharger l’archive NextCloud. Commençons donc par l’installer." />
+<link rel="canonical" href="http://localhost:4000/web/installer_nextcloud_11/" />
+<meta property="og:url" content="http://localhost:4000/web/installer_nextcloud_11/" />
+<meta property="og:site_name" content="OpenBSD" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2017-05-02T19:55:55+02:00" />
+<script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "Article",
+    "headline": "Installer NextCloud 11",
+    "datePublished": "2017-05-02T19:55:55+02:00",
+    "description": "Pour commencer, nous avons besoin de l’outil wget pour télécharger l’archive NextCloud. Commençons donc par l’installer.",
+    "logo": "http://localhost:4000/siteicon.png",
+    "url": "http://localhost:4000/web/installer_nextcloud_11/"
+  }
+</script>
+<!-- End Jekyll SEO tag -->
+
+		
+	</head>
+
+	<body>
+		<header>
+			<h1>
+				<a href="/"><img src="/images/emblem.svg" width="40" height="40" alt="OpenBSD logo"></a>
+				OpenBSD
+				<button type="button" class="open-nav" id="open-nav"></button>
+			</h1>
+
+			<form action="/search/" method="get">
+				<input type="text" name="q" id="search-input" placeholder="Search" autofocus>
+				<input type="submit" value="Search" style="display: none;">
+			</form>
+
+			<nav class="full-navigation">
+				<ul>
+					<li class="nav-item top-level ">
+						
+						<a href="/">Bienvenue</a>
+					</li>
+				</ul>
+
+				<ul>
+					
+					
+						<li class="nav-item top-level ">
+							
+							<a href="/maintenance/monter_les_partitions_openbsd_sous_freebsd11-0_rescue/">Maintenance</a>
+							<ul>
+								
+									<li class="nav-item "><a href="/maintenance/monter_les_partitions_openbsd_sous_freebsd11-0_rescue/">Monter les partitions OpenBSD sous FreeBSD11.0-Rescue</a></li>
+								
+									<li class="nav-item "><a href="/maintenance/installer_les_headers_X_manquants/">Installer les headers X manquants</a></li>
+								
+							</ul>
+						</li>
+					
+						<li class="nav-item top-level ">
+							
+							<a href="/messagerie/installer_le_serveur_de_messagerie_instantanee_prosody_xmpp/">Messagerie</a>
+							<ul>
+								
+									<li class="nav-item "><a href="/messagerie/installer_le_serveur_de_messagerie_instantanee_prosody_xmpp/">Installer le serveur de messagerie Prosody (XMPP)</a></li>
+								
+							</ul>
+						</li>
+					
+						<li class="nav-item top-level ">
+							
+							<a href="/reseau/creer_son_propre_serveur_dns_avec_unbound/">Réseau</a>
+							<ul>
+								
+									<li class="nav-item "><a href="/reseau/creer_son_propre_serveur_dns_avec_unbound/">Créer son propre serveur DNS avec Unbound</a></li>
+								
+									<li class="nav-item "><a href="/reseau/creer_un_serveur_vpn_avec_openvpn/">Créer un serveur VPN avec OpenVPN</a></li>
+								
+							</ul>
+						</li>
+					
+						<li class="nav-item top-level ">
+							
+							<a href="/systeme/installer_openbsd_6-0_sur_votre_serveur_kimsufi/">Système</a>
+							<ul>
+								
+									<li class="nav-item "><a href="/systeme/installer_openbsd_6-0_sur_votre_serveur_kimsufi/">Installer OpenBSD sur votre serveur Kimsufi</a></li>
+								
+									<li class="nav-item "><a href="/systeme/installer_et_configurer_nano/">Installer et configurer Nano</a></li>
+								
+									<li class="nav-item "><a href="/systeme/configurer_ssh/">Configurer SSH</a></li>
+								
+									<li class="nav-item "><a href="/systeme/configurer_doas/">Configurer DOAS</a></li>
+								
+									<li class="nav-item "><a href="/systeme/configuration_minimale_de_packetfilter/">Configuration minimale de PacketFilter</a></li>
+								
+									<li class="nav-item "><a href="/systeme/afficher_ou_changer_le_hostname/">Afficher / Changer le hostname</a></li>
+								
+							</ul>
+						</li>
+					
+						<li class="nav-item top-level ">
+							
+							<a href="/torrent/installer_et_configurer_transmission/">Torrent</a>
+							<ul>
+								
+									<li class="nav-item "><a href="/torrent/installer_et_configurer_transmission/">Installer et configurer Transmission</a></li>
+								
+							</ul>
+						</li>
+					
+						<li class="nav-item top-level current">
+							
+							<a href="/web/installer_et_configurer_un_serveur_http_ssl_et_php/">Web</a>
+							<ul>
+								
+									<li class="nav-item "><a href="/web/installer_et_configurer_un_serveur_http_ssl_et_php/">Installer et configurer un serveur HTTP + SSL et PHP</a></li>
+								
+									<li class="nav-item "><a href="/web/creer_une_base_de_donnees_sql_avec_mariadb/">Créer une base de données SQL avec MariaDB</a></li>
+								
+									<li class="nav-item current"><a href="/web/installer_nextcloud_11/">Installer NextCloud 11</a></li>
+								
+									<li class="nav-item "><a href="/web/utiliser_relayd_en_tant_que_reverse_proxy/">Utiliser relayd en tant que Reverse Proxy</a></li>
+								
+							</ul>
+						</li>
+					
+				</ul>
+
+				<ul>
+					<li class="nav-item top-level ">
+						
+						<a href="/changelog/">Change Log</a>
+					</li>
+				</ul>
+			</nav>
+		</header>
+
+		<section class="main">
+			<div class="page-header">
+				<h2>Web</h2>
+				<h3>Installer NextCloud 11</h3>
+			</div>
+			<article class="content">
+				<p>Pour commencer, nous avons besoin de l’outil <code class="highlighter-rouge">wget</code> pour télécharger l’archive NextCloud. Commençons donc par l’installer.</p>
+
+<blockquote>
+  <p>pkg_add -i wget</p>
+</blockquote>
+
+<div class="highlighter-rouge"><pre class="highlight"><code># pkg_add -i wget
+quirks-2.241 signed on 2016-07-26T16:56:10Z
+wget-1.18:pcre-8.38p0: ok
+wget-1.18:libunistring-0.9.6p0: ok
+wget-1.18:libpsl-0.13.0: ok
+wget-1.18: ok
+</code></pre>
+</div>
+
+<p>Puis, téléchargeons l’archive NextCloud.</p>
+
+<blockquote>
+  <p>wget https://download.nextcloud.com/server/releases/nextcloud-11.0.2.tar.bz2</p>
+</blockquote>
+
+<div class="highlighter-rouge"><pre class="highlight"><code># wget https://download.nextcloud.com/server/releases/nextcloud-11.0.2.tar.bz2
+--2017-04-05 19:36:10--  https://download.nextcloud.com/server/releases/nextcloud-11.0.2.tar.bz2
+Resolving download.nextcloud.com (download.nextcloud.com)... 88.198.160.133
+Connecting to download.nextcloud.com (download.nextcloud.com)|88.198.160.133|:443... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 38598274 (37M) [application/x-bzip2]
+Saving to: 'nextcloud-11.0.2.tar.bz2'
+
+nextcloud-11.0.2.tar.bz2     100%[=============================================&gt;]  36.81M  9.37MB/s    in 5.4s
+
+2017-04-05 19:36:16 (6.88 MB/s) - 'nextcloud-11.0.2.tar.bz2' saved [38598274/38598274]
+</code></pre>
+</div>
+
+<p>Puis nous devons la désarchiver.</p>
+
+<blockquote>
+  <p>tar xfvj nextcloud-11.0.2.tar.bz2</p>
+</blockquote>
+
+<p>Ensuite, nous déplaçons le dossier <code class="highlighter-rouge">nextcloud</code> à l’espace prévu par notre serveur web.</p>
+
+<blockquote>
+  <p>mv nextcloud/ /var/www/htdocs/</p>
+</blockquote>
+
+<p>Puis nous changeons les permissions sur ce dossier.</p>
+
+<blockquote>
+  <p>chown -R www:daemon /var/www/htdocs/nextcloud</p>
+</blockquote>
+
+<p>Pour fonctionner, NextCloud a besoin de certaines dépendances PHP. Nous allons donc procéder à leur installation.</p>
+
+<blockquote>
+  <p>pkg_add -i php-zip php-gd php-curl php-intl php-bz2 pecl-redis icu4c</p>
+</blockquote>
+
+<div class="highlighter-rouge"><pre class="highlight"><code># pkg_add -i php-zip-7.0.8p0 php-gd-7.0.8p0 php-curl-7.0.8p0
+quirks-2.241 signed on 2016-07-26T16:56:10Z
+php-zip-7.0.8p0: ok
+php-gd-7.0.8p0:png-1.6.23: ok
+php-gd-7.0.8p0:jpeg-1.5.0p0v0: ok
+Can't install php-gd-7.0.8p0 because of libraries
+|library X11.16.1 not found
+| not found anywhere
+|library Xpm.9.0 not found
+| not found anywhere
+|library freetype.25.0 not found
+| not found anywhere
+Direct dependencies for php-gd-7.0.8p0 resolve to png-1.6.23 php-7.0.8p0 jpeg-1.5.0p0v0
+Full dependency tree is jpeg-1.5.0p0v0 femail-1.0p1 libxml-2.9.3 php-7.0.8p0 xz-5.2.2p0 femail-chroot-1.0p2 gettext-0.19.7 png-1.6.23 libiconv-1.14p3
+php-curl-7.0.8p0:nghttp2-1.12.0: ok
+php-curl-7.0.8p0:curl-7.49.0: ok
+php-curl-7.0.8p0: ok
+</code></pre>
+</div>
+
+<p>Problème ! Nous constatons que certaines librairies sont manquantes. Il s’agit des sets X qui n’ont pas été installé lors de l’installation du système d’exploitation. Pour résoudre ce problème se rendre sur <a href="https://github.com/dodoritfort/OpenBSD/wiki/Installer-les-headers-X-manquants">cette page</a>.</p>
+
+<p>Une fois le set X installé, on peut retenter l’installation de php-gd.</p>
+
+<blockquote>
+  <p>pkg_add -i php-gd-7.0.8p0</p>
+</blockquote>
+
+<div class="highlighter-rouge"><pre class="highlight"><code># pkg_add -i php-gd-7.0.8p0
+quirks-2.241 signed on 2016-07-26T16:56:10Z
+php-gd-7.0.8p0: ok
+</code></pre>
+</div>
+
+<p>Parfait !</p>
+
+<p>Nous activons ensuite ces extensions.</p>
+
+<blockquote>
+  <p>cp /etc/php-7.0.sample/* /etc/php-7.0/</p>
+</blockquote>
+
+<p>Voici le résultat de cette copie.</p>
+
+<blockquote>
+  <p>ls -l /etc/php-7.0/</p>
+</blockquote>
+
+<div class="highlighter-rouge"><pre class="highlight"><code># ls -l /etc/php-7.0/
+total 16
+-rw-r--r--  1 root  wheel  18 Mar 26 19:53 curl.ini
+-rw-r--r--  1 root  wheel  16 Mar 26 19:53 gd.ini
+-rw-r--r--  1 root  wheel  26 Mar 26 19:53 opcache.ini
+-rw-r--r--  1 root  wheel  17 Mar 26 19:53 zip.ini
+</code></pre>
+</div>
+
+<p>Une chose importante avant de continuer mais surtout avant d’utiliser NextCloud… Il faut modifier le fichier de configuration PHP afin de lui signaler que nous voulons augmenter la taille maximale possible des fichiers en upload.</p>
+
+<blockquote>
+  <p>nano /etc/php-7.0.ini</p>
+</blockquote>
+
+<p>Puis nous modifions les lignes <code class="highlighter-rouge">post_max_size</code> et <code class="highlighter-rouge">upload_max_filesize</code> tel que ci-dessous afin d’augmenter ce volume à 5Go.</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>post_max_size = 5000M
+upload_max_filesize = 5000M
+</code></pre>
+</div>
+
+<p>Documentation : <a href="https://docs.nextcloud.com/server/9/admin_manual/configuration_files/big_file_upload_configuration.html">https://docs.nextcloud.com/server/9/admin_manual/configuration_files/big_file_upload_configuration.html</a></p>
+
+<p>Puis nous redémarrons le service PHP.</p>
+
+<blockquote>
+  <p>rcctl restart php70_fpm</p>
+</blockquote>
+
+<div class="highlighter-rouge"><pre class="highlight"><code># rcctl restart php70_fpm
+php70_fpm(ok)
+php70_fpm(ok)
+</code></pre>
+</div>
+
+<p>Enfin, nous modifions le fichier de configuration du serveur httpd pour lui spécifier que notre cloud doit pouvoir accepter des upload à hauteur de 513Mb maximum.</p>
+
+<blockquote>
+  <p>nano /etc/httpd.conf</p>
+</blockquote>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>server "cloud.votredomaine.fr" {
+        listen on * port 80
+        block return 301 "https://$SERVER_NAME$REQUEST_URI"
+}
+
+server "cloud.votredomaine.fr" {
+        listen on $ext_addr tls port 443
+        root "/htdocs/nextcloud/"
+        directory index index.php
+        tls {
+                key "/etc/letsencrypt/live/cloud.votredomaine.fr/privkey.pem"
+                certificate "/etc/letsencrypt/live/cloud.votredomaine.fr/fullchain.pem"
+        }
+        hsts
+
+        # Set max upload size to 513M (in bytes)
+        connection max request body 537919488
+
+        # First deny access to the specified files
+        location "/db_structure.xml" { block }
+        location "/.ht*"             { block }
+        location "/README"           { block }
+        location "/data*"            { block }
+        location "/config*"          { block }
+
+        location "/*.php*" {
+                fastcgi socket "/run/php-fpm.sock"
+        }
+}
+</code></pre>
+</div>
+
+<p>On vérifie la configuration, on al recharge et enfin on redémarre.</p>
+
+<blockquote>
+  <p>httpd -n</p>
+</blockquote>
+
+<blockquote>
+  <p>rcctl reload httpd</p>
+</blockquote>
+
+<blockquote>
+  <p>rcctl restart httpd</p>
+</blockquote>
+
+<p>Rendons-nous ensuite à l’adresse de notre serveur pour la configuration de NextCloud.</p>
+
+<p><code class="highlighter-rouge">http://cloud.votredomaine.fr/</code></p>
+
+			</article>
+		</section>
+
+		<script>
+			document.getElementById("open-nav").addEventListener("click", function () {
+				document.body.classList.toggle("nav-open");
+			});
+		</script>
+	</body>
+</html>
