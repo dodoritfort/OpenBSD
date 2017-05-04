@@ -1,3 +1,6 @@
 [submodule "OpenBSD.wiki"]
 	path = OpenBSD.wiki
 	url = https://github.com/dodoritfort/OpenBSD.wiki.git
+[submodule "_wiki"]
+	path = _wiki
+	url = https://github.com/dodoritfort/OpenBSD.wiki.git

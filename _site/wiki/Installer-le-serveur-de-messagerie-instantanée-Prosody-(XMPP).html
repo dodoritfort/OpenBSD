@@ -1,0 +1,187 @@
+<h1 id="installer-le-serveur-de-messagerie-prosody-xmpp">Installer le serveur de messagerie Prosody (XMPP)</h1>
+
+<h3 id="retrouvez-plus-darticles-sur-httpwikidodoritfortxyz"><strong>Retrouvez plus d’articles sur http://wiki.dodoritfort.xyz/</strong></h3>
+
+<p>Prosody est un serveur de messagerie instantanée XMPP écrit en LUA. Ses objectifs sont d’être simple à configurer, d’être modulaire et de consommer peu de ressource système.</p>
+
+<h2 id="1-installation">1. Installation</h2>
+
+<p>Rien de plus simple pour l’installer ! Il suffit d’exécuter la commande suivante.</p>
+
+<blockquote>
+  <p>pkg_add -i prosody</p>
+</blockquote>
+
+<div class="highlighter-rouge"><pre class="highlight"><code># pkg_add -i prosody
+quirks-2.241 signed on 2016-07-26T16:56:10Z
+prosody-0.9.10p2:libidn-1.32p1: ok
+prosody-0.9.10p2:lua-5.1.5p6: ok
+prosody-0.9.10p2:luafs-1.6.3p0: ok
+prosody-0.9.10p2:luadbi-0.5p0: ok
+prosody-0.9.10p2:luazlib-20100731p2: ok
+prosody-0.9.10p2:luasocket-3.0rc1p1: ok
+prosody-0.9.10p2:luasec-0.6p0: ok
+prosody-0.9.10p2:luaexpat-1.3.0p0: ok
+prosody-0.9.10p2: ok
+The following new rcscripts were installed: /etc/rc.d/prosody
+See rcctl(8) for details.
+Look in /usr/local/share/doc/pkg-readmes for extra documentation.
+</code></pre>
+</div>
+
+<h2 id="2-configuration-minimale">2. Configuration minimale</h2>
+
+<p>Une fois l’installation effectuée, il faut éditer le fichier de configuration <code class="highlighter-rouge">prosody.cfg.lua</code>.</p>
+
+<p>A savoir que le double-tiret <code class="highlighter-rouge">--</code> sert à commenter les lignes.</p>
+
+<blockquote>
+  <p>nano /etc/prosody/prosody.cfg.lua</p>
+</blockquote>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>-- VirtualHost "localhost"
+VirtualHost "votredomaine.fr"
+</code></pre>
+</div>
+
+<p>Documentation : https://prosody.im/doc/configure</p>
+
+<h2 id="3-premier-démarrage">3. Premier démarrage</h2>
+
+<p>Après avoir configuré notre domaine, nous pouvons dès à présent démarrer notre serveur prosody.</p>
+
+<blockquote>
+  <p>rcctl start prosody</p>
+</blockquote>
+
+<p>Nous vérifions ensuite que le service est bien démarré.</p>
+
+<blockquote>
+  <p>prosodyctl status</p>
+</blockquote>
+
+<div class="highlighter-rouge"><pre class="highlight"><code># prosodyctl status
+Prosody is running with PID 99255
+</code></pre>
+</div>
+
+<p>Pour qu’il soit exécuté à chaque démarrage, nous devons l’activer.</p>
+
+<blockquote>
+  <p>rcctl enable prosody</p>
+</blockquote>
+
+<p>Documentation : https://prosody.im/doc/prosodyctl</p>
+
+<h2 id="4-ajouter-un-utilisateur">4. Ajouter un utilisateur</h2>
+
+<p>Par défaut, l’option de création de compte via un client XMPP est désactivée. Il s’agit de la ligne <code class="highlighter-rouge">allow_registration = false;</code> du fichier de configuration.</p>
+
+<p>Nous devons donc le créer manuellement via la commande suivante où <code class="highlighter-rouge">votredomaine.fr</code> est celui que nous avons spécifié dans le <code class="highlighter-rouge">VirtualHost</code> du fichier de configuration.</p>
+
+<blockquote>
+  <p>prosodyctl adduser user@votredomaine.fr</p>
+</blockquote>
+
+<p>Nous pouvons ensuite nous connecter avec le client XMPP de notre choix et vérifier le fichier log.</p>
+
+<blockquote>
+  <p>cat /var/prosody/prosody.log</p>
+</blockquote>
+
+<div class="highlighter-rouge"><pre class="highlight"><code># cat /var/prosody/prosody.log
+Mar 25 11:48:13 general info    Hello and welcome to Prosody version 0.9.10
+Mar 25 11:48:13 general info    Prosody is using the select backend for connection handling
+Mar 25 11:48:13 portmanager     info    Activated service 'c2s' on [::]:5222, [*]:5222
+Mar 25 11:48:13 portmanager     info    Activated service 'legacy_ssl' on no ports
+Mar 25 11:48:13 portmanager     info    Activated service 's2s' on [::]:5269, [*]:5269
+Mar 25 11:48:13 mod_posix       info    Prosody is about to detach from the console, disabling further console output
+Mar 25 11:48:13 mod_posix       info    Successfully daemonized to PID 5826
+Mar 25 11:49:16 c2s107ce75ddf80 info    Client connected
+Mar 25 11:49:20 c2s107ce75ddf80 info    Authenticated as user@votredomaine.fr
+Mar 25 11:49:37 c2s107ce75ddf80 info    Client disconnected: closed
+</code></pre>
+</div>
+
+<p>Pour changer le mot de passe d’un utilisateur.</p>
+
+<blockquote>
+  <p>prosodyctl passwd user@votredomaine.fr</p>
+</blockquote>
+
+<p>Pour supprimer un utilisateur.</p>
+
+<blockquote>
+  <p>prosodyctl deluser user@votredomaine.fr</p>
+</blockquote>
+
+<p>Documentation : http://prosody.im/doc/creating_accounts</p>
+
+<h2 id="5-configurer-le-mode-ssl">5. Configurer le mode SSL</h2>
+
+<p>Commençons par générer le certificat.</p>
+
+<blockquote>
+  <p>prosodyctl cert generate votredomaine.fr</p>
+</blockquote>
+
+<div class="highlighter-rouge"><pre class="highlight"><code># prosodyctl cert generate votredomaine.fr
+Choose key size (2048): 2048
+Generating RSA private key, 2048 bit long modulus
+...............................................+++
+...........................+++
+e is 65537 (0x10001)
+Key written to /var/prosody/votredomaine.fr.key
+Please provide details to include in the certificate config file.
+Leave the field empty to use the default value or '.' to exclude the field.
+countryName (GB): FR
+localityName (The Internet): 
+organizationName (Your Organisation): 
+organizationalUnitName (XMPP Department):
+commonName (votredomaine.fr):
+emailAddress (xmpp@votredomaine.fr):
+
+Config written to /var/prosody/votredomaine.fr.cnf
+Certificate written to /var/prosody/votredomaine.fr.crt
+</code></pre>
+</div>
+
+<p>Puis spécifions cela dans le fichier de configuration.</p>
+
+<blockquote>
+  <p>nano /etc/prosody/prosody.cfg.lua</p>
+</blockquote>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>-- These are the SSL/TLS-related settings. If you don't want
+-- to use SSL/TLS, you may comment or remove this
+ssl = {
+        key = "/var/prosody/votredomaine.fr.key";
+        certificate = "/var/prosody/votredomaine.fr.crt";
+}
+</code></pre>
+</div>
+
+<p>Ensuite on recharge la configuration et on redémarre le serveur.</p>
+
+<blockquote>
+  <p>prosodyctl reload</p>
+</blockquote>
+
+<div class="highlighter-rouge"><pre class="highlight"><code># prosodyctl reload
+Prosody log files re-opened and config file reloaded. You may need to reload modules for some changes to take effect.
+</code></pre>
+</div>
+
+<blockquote>
+  <p>prosodyctl restart</p>
+</blockquote>
+
+<div class="highlighter-rouge"><pre class="highlight"><code># prosodyctl restart
+Stopped
+Started
+</code></pre>
+</div>
+
+<p>Documentation : https://prosody.im/doc/certificates</p>
+
+<h3 id="retrouvez-plus-darticles-sur-httpwikidodoritfortxyz-1"><strong>Retrouvez plus d’articles sur http://wiki.dodoritfort.xyz/</strong></h3>

@@ -1,0 +1,104 @@
+<h1 id="configuration-minimale-de-packetfilter">Configuration minimale de PacketFilter</h1>
+
+<h3 id="retrouvez-plus-darticles-sur-httpwikidodoritfortxyz"><strong>Retrouvez plus d’articles sur http://wiki.dodoritfort.xyz/</strong></h3>
+
+<blockquote>
+  <p>nano /etc/pf.conf</p>
+</blockquote>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>#       $OpenBSD: pf.conf,v 1.54 2014/08/23 05:49:42 deraadt Exp $
+#
+# See pf.conf(5) and /etc/examples/pf.conf
+
+###########
+#  MACRO  #
+###########
+ext_if = "em0"                  # Interface
+port_ssh = "22"                 # Port SSH
+set skip on lo                  # Pas de filtre en local
+set limit table-entries 400000  # Nombre d entree maximale dans une table
+
+######################
+#  TABLES Blacklist  #
+######################
+table &lt;ssh_abuse&gt; persist
+
+#####################################################
+#  Protection contre l'usurpation de l'adresse IP   #
+#####################################################
+block in quick from urpf-failed
+antispoof for $ext_if
+
+block return    # block stateless traffic
+pass            # establish keep-state
+
+# By default, do not permit remote connections to X11
+block return in on ! lo0 proto tcp to port 6000:6010
+
+###########################
+#  SSH - Anti BruteForce  #
+###########################
+block in log quick proto tcp from &lt;ssh_abuse&gt; to any port $port_ssh
+pass in on $ext_if proto tcp to any port $port_ssh flags S/SA keep state \
+        (max-src-conn 3, max-src-conn-rate 3/60, overload &lt;ssh_abuse&gt; flush global)
+</code></pre>
+</div>
+
+<p>Activer PacketFilter</p>
+<blockquote>
+  <p>pfctl -e</p>
+</blockquote>
+
+<p>Désactiver PacketFilter</p>
+<blockquote>
+  <p>pfctl -d</p>
+</blockquote>
+
+<p>Vérifier la configuration sans l’injecter</p>
+<blockquote>
+  <p>pfctl -nf /etc/pf.conf</p>
+</blockquote>
+
+<p>Recharger la configuration à chaud</p>
+<blockquote>
+  <p>pfctl -f /etc/pf.conf</p>
+</blockquote>
+
+<p>Voir les règles chargées</p>
+<blockquote>
+  <p>pfctl -s rules</p>
+</blockquote>
+
+<p>Afficher les flux en temps réel</p>
+<blockquote>
+  <p>tcpdump -n -e -ttt -i pflog0</p>
+</blockquote>
+
+<p>Afficher les logs</p>
+<blockquote>
+  <p>tcpdump -n -e -ttt -r /var/log/pflog</p>
+</blockquote>
+
+<p>Afficher les IP de la blackliste</p>
+<blockquote>
+  <p>pfctl -t ssh_abuse -T show</p>
+</blockquote>
+
+<p>Pour supprimer une adresse IP de la blackliste</p>
+<blockquote>
+  <p>pfctl -t ssh_abuse -T delete xxx.xxx.xxx.xxx</p>
+</blockquote>
+
+<p>Vider les règles du pare feu</p>
+<blockquote>
+  <p>pfctl -F all</p>
+</blockquote>
+
+<p>Voir les connexions en cours</p>
+<blockquote>
+  <p>pfctl -s states</p>
+</blockquote>
+
+<p>Documentation : <a href="http://man.openbsd.org/pf.conf">http://man.openbsd.org/pf.conf</a></p>
+
+<h3 id="retrouvez-plus-darticles-sur-httpwikidodoritfortxyz-1"><strong>Retrouvez plus d’articles sur http://wiki.dodoritfort.xyz/</strong></h3>
