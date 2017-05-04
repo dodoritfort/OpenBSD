@@ -33,11 +33,7 @@ wikiToJekyll:
   #
   # Example : https://github.com/userName/repositoryName.wiki.git
 
-<<<<<<< HEAD
   wiki_repository_url: https://github.com/dodoritfort/OpenBSD.wiki.git
-=======
-  wiki_repository_url: # https://github.com/dodoritfort/OpenBSD.wiki.git
->>>>>>> 44d5e403e03a4f9cdb881d40dc9219bc92dbde93
 
   # wiki submodule folder
   # the underscore makes sure that this folder is ignored by Jekyll
