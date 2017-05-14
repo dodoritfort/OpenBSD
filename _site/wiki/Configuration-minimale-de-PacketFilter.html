@@ -1,75 +1,131 @@
+<!DOCTYPE html>
 <html>
+<head>
+	<title>Configuration minimale de PacketFilter –  – </title>
+	<link rel="stylesheet" type="text/css" href="/OpenBSD/assets/css/style.css" />
+</head>
 <body>
 
-Bienvenue !
+<section class="page-header">
+	<h1 class="project-name">OpenBSD</h1>
+	<h2 class="project-tagline">Le petit wiki OpenBSD</h2>   
+	<a href="/OpenBSD/wiki/Home.html" class="btn">Menu</a>
+</section>
 
-<ul class="wikiMenu">
-  
-    
-    <li><a class="post-link" href="/OpenBSD/wiki/Configuration-minimale-de-PacketFilter.html">Configuration minimale de PacketFilter</a></li>
-    
-  
-    
-    <li><a class="post-link" href="/OpenBSD/wiki/Configurer-DOAS.html">Configurer DOAS</a></li>
-    
-  
-    
-    <li><a class="post-link" href="/OpenBSD/wiki/Configurer-SSH.html">Configurer SSH</a></li>
-    
-  
-    
-    <li><a class="post-link" href="/OpenBSD/wiki/Configurer-le-DNS-Unbound-avec-cache.html">Configurer le DNS Unbound avec cache</a></li>
-    
-  
-    
-    <li><a class="post-link" href="/OpenBSD/wiki/Cr%C3%A9er-une-base-de-donn%C3%A9es-avec-MariaDB.html">Créer une base de données avec MariaDB</a></li>
-    
-  
-    
-    <li><a class="post-link" href="/OpenBSD/wiki/HTTPD---Exemple(s).html">HTTPD   Exemple(s)</a></li>
-    
-  
-    
-    <li><a class="post-link" href="/OpenBSD/wiki/Home.html">Home</a></li>
-    
-  
-    
-    <li><a class="post-link" href="/OpenBSD/wiki/Installer-NextCloud-11.html">Installer NextCloud 11</a></li>
-    
-  
-    
-    <li><a class="post-link" href="/OpenBSD/wiki/Installer-OpenBSD-sur-votre-serveur-Kimsufi.html">Installer OpenBSD sur votre serveur Kimsufi</a></li>
-    
-  
-    
-    <li><a class="post-link" href="/OpenBSD/wiki/Installer-et-configurer-Nano.html">Installer et configurer Nano</a></li>
-    
-  
-    
-    <li><a class="post-link" href="/OpenBSD/wiki/Installer-et-configurer-un-serveur-HTTP---SSL-et-PHP-7.html">Installer et configurer un serveur HTTP   SSL et PHP 7</a></li>
-    
-  
-    
-    <li><a class="post-link" href="/OpenBSD/wiki/Installer-le-serveur-VPN-OpenVPN.html">Installer le serveur VPN OpenVPN</a></li>
-    
-  
-    
-    <li><a class="post-link" href="/OpenBSD/wiki/Installer-le-serveur-de-messagerie-instantan%C3%A9e-Prosody-(XMPP).html">Installer le serveur de messagerie instantanée Prosody (XMPP)</a></li>
-    
-  
-    
-    <li><a class="post-link" href="/OpenBSD/wiki/Installer-les-headers-X-manquants.html">Installer les headers X manquants</a></li>
-    
-  
-    
-    <li><a class="post-link" href="/OpenBSD/wiki/Monter-les-partitions-OpenBSD-sous-FreeBSD11.0-Rescue.html">Monter les partitions OpenBSD sous FreeBSD11.0 Rescue</a></li>
-    
-  
-    
-    <li><a class="post-link" href="/OpenBSD/wiki/PacketFilter---Exemple(s).html">PacketFilter   Exemple(s)</a></li>
-    
-  
-</ul>
+<section class="main-content">
+	<h1 id="configuration-minimale-de-packetfilter">Configuration minimale de PacketFilter</h1>
+
+<h3 id="retrouvez-plus-darticles-sur-httpwikidodoritfortxyz"><strong>Retrouvez plus d’articles sur http://wiki.dodoritfort.xyz/</strong></h3>
+
+<blockquote>
+  <p>nano /etc/pf.conf</p>
+</blockquote>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>#       $OpenBSD: pf.conf,v 1.54 2014/08/23 05:49:42 deraadt Exp $
+#
+# See pf.conf(5) and /etc/examples/pf.conf
+
+###########
+#  MACRO  #
+###########
+ext_if = "em0"                  # Interface
+port_ssh = "22"                 # Port SSH
+set skip on lo                  # Pas de filtre en local
+set limit table-entries 400000  # Nombre d entree maximale dans une table
+
+######################
+#  TABLES Blacklist  #
+######################
+table &lt;ssh_abuse&gt; persist
+
+#####################################################
+#  Protection contre l'usurpation de l'adresse IP   #
+#####################################################
+block in quick from urpf-failed
+antispoof for $ext_if
+
+block return    # block stateless traffic
+pass            # establish keep-state
+
+# By default, do not permit remote connections to X11
+block return in on ! lo0 proto tcp to port 6000:6010
+
+###########################
+#  SSH - Anti BruteForce  #
+###########################
+block in log quick proto tcp from &lt;ssh_abuse&gt; to any port $port_ssh
+pass in on $ext_if proto tcp to any port $port_ssh flags S/SA keep state \
+        (max-src-conn 3, max-src-conn-rate 3/60, overload &lt;ssh_abuse&gt; flush global)
+</code></pre>
+</div>
+
+<p>Activer PacketFilter</p>
+<blockquote>
+  <p>pfctl -e</p>
+</blockquote>
+
+<p>Désactiver PacketFilter</p>
+<blockquote>
+  <p>pfctl -d</p>
+</blockquote>
+
+<p>Vérifier la configuration sans l’injecter</p>
+<blockquote>
+  <p>pfctl -nf /etc/pf.conf</p>
+</blockquote>
+
+<p>Recharger la configuration à chaud</p>
+<blockquote>
+  <p>pfctl -f /etc/pf.conf</p>
+</blockquote>
+
+<p>Voir les règles chargées</p>
+<blockquote>
+  <p>pfctl -s rules</p>
+</blockquote>
+
+<p>Afficher les flux en temps réel</p>
+<blockquote>
+  <p>tcpdump -n -e -ttt -i pflog0</p>
+</blockquote>
+
+<p>Afficher les logs</p>
+<blockquote>
+  <p>tcpdump -n -e -ttt -r /var/log/pflog</p>
+</blockquote>
+
+<p>Afficher les IP de la blackliste</p>
+<blockquote>
+  <p>pfctl -t ssh_abuse -T show</p>
+</blockquote>
+
+<p>Pour supprimer une adresse IP de la blackliste</p>
+<blockquote>
+  <p>pfctl -t ssh_abuse -T delete xxx.xxx.xxx.xxx</p>
+</blockquote>
+
+<p>Vider les règles du pare feu</p>
+<blockquote>
+  <p>pfctl -F all</p>
+</blockquote>
+
+<p>Voir les connexions en cours</p>
+<blockquote>
+  <p>pfctl -s states</p>
+</blockquote>
+
+<p>Documentation : <a href="http://man.openbsd.org/pf.conf">http://man.openbsd.org/pf.conf</a></p>
+
+<h3 id="retrouvez-plus-darticles-sur-httpwikidodoritfortxyz-1"><strong>Retrouvez plus d’articles sur http://wiki.dodoritfort.xyz/</strong></h3>
+
+</section>
+
+<section class="page-footer">
+	<footer class="site-footer"> 
+	<span class="site-footer-owner"><a href="https://github.com/dodoritfort/OpenBSD/">OpenBSD</a> is maintained by <a href="https://github.com/dodoritfort">dodoritfort</a>.</span>
+	<span class="site-footer-credits">This page was generated by <a href="https://pages.github.com">GitHub Pages</a>.</span>
+	</footer>
+</section>
 
 </body>
 </html>

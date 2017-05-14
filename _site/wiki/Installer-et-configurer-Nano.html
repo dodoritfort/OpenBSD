@@ -1,75 +1,112 @@
+<!DOCTYPE html>
 <html>
+<head>
+	<title>Installer et configurer Nano –  – </title>
+	<link rel="stylesheet" type="text/css" href="/OpenBSD/assets/css/style.css" />
+</head>
 <body>
 
-Bienvenue !
+<section class="page-header">
+	<h1 class="project-name">OpenBSD</h1>
+	<h2 class="project-tagline">Le petit wiki OpenBSD</h2>   
+	<a href="/OpenBSD/wiki/Home.html" class="btn">Menu</a>
+</section>
 
-<ul class="wikiMenu">
-  
-    
-    <li><a class="post-link" href="/OpenBSD/wiki/Configuration-minimale-de-PacketFilter.html">Configuration minimale de PacketFilter</a></li>
-    
-  
-    
-    <li><a class="post-link" href="/OpenBSD/wiki/Configurer-DOAS.html">Configurer DOAS</a></li>
-    
-  
-    
-    <li><a class="post-link" href="/OpenBSD/wiki/Configurer-SSH.html">Configurer SSH</a></li>
-    
-  
-    
-    <li><a class="post-link" href="/OpenBSD/wiki/Configurer-le-DNS-Unbound-avec-cache.html">Configurer le DNS Unbound avec cache</a></li>
-    
-  
-    
-    <li><a class="post-link" href="/OpenBSD/wiki/Cr%C3%A9er-une-base-de-donn%C3%A9es-avec-MariaDB.html">Créer une base de données avec MariaDB</a></li>
-    
-  
-    
-    <li><a class="post-link" href="/OpenBSD/wiki/HTTPD---Exemple(s).html">HTTPD   Exemple(s)</a></li>
-    
-  
-    
-    <li><a class="post-link" href="/OpenBSD/wiki/Home.html">Home</a></li>
-    
-  
-    
-    <li><a class="post-link" href="/OpenBSD/wiki/Installer-NextCloud-11.html">Installer NextCloud 11</a></li>
-    
-  
-    
-    <li><a class="post-link" href="/OpenBSD/wiki/Installer-OpenBSD-sur-votre-serveur-Kimsufi.html">Installer OpenBSD sur votre serveur Kimsufi</a></li>
-    
-  
-    
-    <li><a class="post-link" href="/OpenBSD/wiki/Installer-et-configurer-Nano.html">Installer et configurer Nano</a></li>
-    
-  
-    
-    <li><a class="post-link" href="/OpenBSD/wiki/Installer-et-configurer-un-serveur-HTTP---SSL-et-PHP-7.html">Installer et configurer un serveur HTTP   SSL et PHP 7</a></li>
-    
-  
-    
-    <li><a class="post-link" href="/OpenBSD/wiki/Installer-le-serveur-VPN-OpenVPN.html">Installer le serveur VPN OpenVPN</a></li>
-    
-  
-    
-    <li><a class="post-link" href="/OpenBSD/wiki/Installer-le-serveur-de-messagerie-instantan%C3%A9e-Prosody-(XMPP).html">Installer le serveur de messagerie instantanée Prosody (XMPP)</a></li>
-    
-  
-    
-    <li><a class="post-link" href="/OpenBSD/wiki/Installer-les-headers-X-manquants.html">Installer les headers X manquants</a></li>
-    
-  
-    
-    <li><a class="post-link" href="/OpenBSD/wiki/Monter-les-partitions-OpenBSD-sous-FreeBSD11.0-Rescue.html">Monter les partitions OpenBSD sous FreeBSD11.0 Rescue</a></li>
-    
-  
-    
-    <li><a class="post-link" href="/OpenBSD/wiki/PacketFilter---Exemple(s).html">PacketFilter   Exemple(s)</a></li>
-    
-  
-</ul>
+<section class="main-content">
+	<h1 id="installer-et-configurer-nano">Installer et configurer Nano</h1>
+
+<h3 id="retrouvez-plus-darticles-sur-httpwikidodoritfortxyz"><strong>Retrouvez plus d’articles sur http://wiki.dodoritfort.xyz/</strong></h3>
+
+<p>Tout d’abords, installons Nano.</p>
+
+<blockquote>
+  <p>pkg_add nano</p>
+</blockquote>
+
+<p>Nous cherchons ensuite où est caché Nano.</p>
+
+<blockquote>
+  <p>find / -name “nano”</p>
+</blockquote>
+
+<div class="highlighter-rouge"><pre class="highlight"><code># find / -name "nano"
+/usr/local/bin/nano
+/usr/local/share/doc/nano
+/usr/local/share/examples/nano
+/usr/local/share/nano
+</code></pre>
+</div>
+
+<p>Puis copions un exemple de fichier de configure dans le répertoire home de l’utilisateur souhaité.</p>
+
+<blockquote>
+  <p>cp /usr/local/share/examples/nano/nanorc.sample ~/.nanorc</p>
+</blockquote>
+
+<p>Et enfin nous éditions ce fameux fichier de configuration.</p>
+
+<blockquote>
+  <p>nano ~/.nanorc</p>
+</blockquote>
+
+<p>Dans ce fichier, nous pouvons par exemple activer les choses suivantes.</p>
+
+<p>Activer l’auto-indentation avec <code class="highlighter-rouge">set autoindent</code>.</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>## Use auto-indentation.
+set autoindent
+</code></pre>
+</div>
+
+<p>Activer la souris en mode console dans Nano (si disponible par l’OS) avec <code class="highlighter-rouge">set mouse</code>.</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>## Enable mouse support, if available for your system.  When enabled,
+## mouse clicks can be used to place the cursor, set the mark (with a
+## double click), and execute shortcuts.  The mouse will work in the X
+## Window System, and on the console when gpm is running.
+set mouse
+</code></pre>
+</div>
+
+<p>Puis on active la coloration syntaxique avec <code class="highlighter-rouge">include "/usr/local/share/nano/*.nanorc"</code>. Cette option est géniale car elle permet d’inclure toutes les colorations en une seule fois.</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>## to set the background color to black or white.
+##
+## All regexes should be extended regular expressions.
+##
+## If you wish, you may put your syntax definitions in separate files.
+## You can make use of such files as follows:
+##
+## include "/path/to/syntax_file.nanorc"
+##
+## Unless otherwise noted, the name of the syntax file (without the
+## ".nanorc" extension) should be the same as the "short description"
+## name inside that file.  These names are kept fairly short to make
+## them easier to remember and faster to type using nano's -Y option.
+##
+## To include all existing syntax definitions, you can do:
+include "/usr/local/share/nano/*.nanorc"
+</code></pre>
+</div>
+
+<p>Et on enregistre avec la combinaison de touche <code class="highlighter-rouge">CTRL + X</code> et on répond <code class="highlighter-rouge">Y</code>.</p>
+
+<p>Pour afficher le nombre de ligne dans Nano, on utilise la commande suivante <code class="highlighter-rouge">nano -c</code>.</p>
+
+<blockquote>
+  <p>nano -c ~/.nanorc</p>
+</blockquote>
+
+<h3 id="retrouvez-plus-darticles-sur-httpwikidodoritfortxyz-1"><strong>Retrouvez plus d’articles sur http://wiki.dodoritfort.xyz/</strong></h3>
+
+</section>
+
+<section class="page-footer">
+	<footer class="site-footer"> 
+	<span class="site-footer-owner"><a href="https://github.com/dodoritfort/OpenBSD/">OpenBSD</a> is maintained by <a href="https://github.com/dodoritfort">dodoritfort</a>.</span>
+	<span class="site-footer-credits">This page was generated by <a href="https://pages.github.com">GitHub Pages</a>.</span>
+	</footer>
+</section>
 
 </body>
 </html>

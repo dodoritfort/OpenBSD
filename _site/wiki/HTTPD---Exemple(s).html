@@ -1,75 +1,90 @@
+<!DOCTYPE html>
 <html>
+<head>
+	<title>HTTPD   Exemple(s) –  – </title>
+	<link rel="stylesheet" type="text/css" href="/OpenBSD/assets/css/style.css" />
+</head>
 <body>
 
-Bienvenue !
+<section class="page-header">
+	<h1 class="project-name">OpenBSD</h1>
+	<h2 class="project-tagline">Le petit wiki OpenBSD</h2>   
+	<a href="/OpenBSD/wiki/Home.html" class="btn">Menu</a>
+</section>
 
-<ul class="wikiMenu">
-  
-    
-    <li><a class="post-link" href="/OpenBSD/wiki/Configuration-minimale-de-PacketFilter.html">Configuration minimale de PacketFilter</a></li>
-    
-  
-    
-    <li><a class="post-link" href="/OpenBSD/wiki/Configurer-DOAS.html">Configurer DOAS</a></li>
-    
-  
-    
-    <li><a class="post-link" href="/OpenBSD/wiki/Configurer-SSH.html">Configurer SSH</a></li>
-    
-  
-    
-    <li><a class="post-link" href="/OpenBSD/wiki/Configurer-le-DNS-Unbound-avec-cache.html">Configurer le DNS Unbound avec cache</a></li>
-    
-  
-    
-    <li><a class="post-link" href="/OpenBSD/wiki/Cr%C3%A9er-une-base-de-donn%C3%A9es-avec-MariaDB.html">Créer une base de données avec MariaDB</a></li>
-    
-  
-    
-    <li><a class="post-link" href="/OpenBSD/wiki/HTTPD---Exemple(s).html">HTTPD   Exemple(s)</a></li>
-    
-  
-    
-    <li><a class="post-link" href="/OpenBSD/wiki/Home.html">Home</a></li>
-    
-  
-    
-    <li><a class="post-link" href="/OpenBSD/wiki/Installer-NextCloud-11.html">Installer NextCloud 11</a></li>
-    
-  
-    
-    <li><a class="post-link" href="/OpenBSD/wiki/Installer-OpenBSD-sur-votre-serveur-Kimsufi.html">Installer OpenBSD sur votre serveur Kimsufi</a></li>
-    
-  
-    
-    <li><a class="post-link" href="/OpenBSD/wiki/Installer-et-configurer-Nano.html">Installer et configurer Nano</a></li>
-    
-  
-    
-    <li><a class="post-link" href="/OpenBSD/wiki/Installer-et-configurer-un-serveur-HTTP---SSL-et-PHP-7.html">Installer et configurer un serveur HTTP   SSL et PHP 7</a></li>
-    
-  
-    
-    <li><a class="post-link" href="/OpenBSD/wiki/Installer-le-serveur-VPN-OpenVPN.html">Installer le serveur VPN OpenVPN</a></li>
-    
-  
-    
-    <li><a class="post-link" href="/OpenBSD/wiki/Installer-le-serveur-de-messagerie-instantan%C3%A9e-Prosody-(XMPP).html">Installer le serveur de messagerie instantanée Prosody (XMPP)</a></li>
-    
-  
-    
-    <li><a class="post-link" href="/OpenBSD/wiki/Installer-les-headers-X-manquants.html">Installer les headers X manquants</a></li>
-    
-  
-    
-    <li><a class="post-link" href="/OpenBSD/wiki/Monter-les-partitions-OpenBSD-sous-FreeBSD11.0-Rescue.html">Monter les partitions OpenBSD sous FreeBSD11.0 Rescue</a></li>
-    
-  
-    
-    <li><a class="post-link" href="/OpenBSD/wiki/PacketFilter---Exemple(s).html">PacketFilter   Exemple(s)</a></li>
-    
-  
-</ul>
+<section class="main-content">
+	<h1 id="httpd---exemples">HTTPD - Exemple(s)</h1>
+
+<h3 id="retrouvez-plus-darticles-sur-httpwikidodoritfortxyz"><strong>Retrouvez plus d’articles sur http://wiki.dodoritfort.xyz/</strong></h3>
+
+<blockquote>
+  <p>nano /etc/httpd.conf</p>
+</blockquote>
+
+<div class="highlighter-rouge"><pre class="highlight"><code># $OpenBSD: httpd.conf,v 1.14 2015/02/04 08:39:35 florian Exp $
+
+############
+#  Macros  #
+############
+ext_addr="*"
+
+#############
+#  Servers  #
+#############
+server "cloud.votredomaine.fr" {
+        listen on * port 80
+        block return 301 "https://$SERVER_NAME$REQUEST_URI"
+        log access "cloud.log"
+}
+
+server "cloud.votredomaine.fr" {
+        listen on $ext_addr tls port 443
+        root "/htdocs/cloud/"
+        directory index index.php
+        hsts
+        tls {
+                key "/etc/letsencrypt/live/cloud.votredomaine.fr/privkey.pem"
+                certificate "/etc/letsencrypt/live/cloud.votredomaine.fr/fullchain.pem"
+        }
+        log access "cloud.log"
+        log error "cloud.log"
+
+        # Set max upload size to 3G (in bytes)
+        connection max request body 3145728000
+
+        # First deny access to the specified files
+        location "/db_structure.xml" { block }
+        location "/.ht*"             { block }
+        location "/README"           { block }
+        location "/data*"            { block }
+        location "/config*"          { block }
+
+        location "/*.php*" {
+                fastcgi socket "/run/php-fpm.sock"
+        }
+}
+
+#####################################################
+#  Include MIME types instead of the built-in ones  #
+#####################################################
+types {
+        include "/usr/share/misc/mime.types"
+}
+</code></pre>
+</div>
+
+<p>Documentation : <a href="http://man.openbsd.org/httpd.conf">http://man.openbsd.org/httpd.conf</a></p>
+
+<h3 id="retrouvez-plus-darticles-sur-httpwikidodoritfortxyz-1"><strong>Retrouvez plus d’articles sur http://wiki.dodoritfort.xyz/</strong></h3>
+
+</section>
+
+<section class="page-footer">
+	<footer class="site-footer"> 
+	<span class="site-footer-owner"><a href="https://github.com/dodoritfort/OpenBSD/">OpenBSD</a> is maintained by <a href="https://github.com/dodoritfort">dodoritfort</a>.</span>
+	<span class="site-footer-credits">This page was generated by <a href="https://pages.github.com">GitHub Pages</a>.</span>
+	</footer>
+</section>
 
 </body>
 </html>
