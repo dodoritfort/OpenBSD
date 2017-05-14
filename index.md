@@ -1,7 +1,7 @@
 ---
 layout: page
-title: Home
-wikiPageName: Home
+title: index
+wikiPageName: index
 menu: wiki
 ---
 
