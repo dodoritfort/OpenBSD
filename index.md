@@ -13,7 +13,7 @@ Vous trouverez ici diverses informations pour utiliser OpenBSD en tant que serve
 
 Table des matières :
 
-1. [Installer OpenBSD sur votre serveur Kimsufi](https://github.com/dodoritfort/OpenBSD/wiki/Installer-OpenBSD-sur-votre-serveur-Kimsufi)
+1. [Installer OpenBSD sur votre serveur Kimsufi]({{ site.baseurl }}/wiki/Installer-OpenBSD-sur-votre-serveur-Kimsufi)
 2. [Installer et configurer Nano](https://github.com/dodoritfort/OpenBSD/wiki/Installer-et-configurer-Nano)
 3. [Configurer DOAS](https://github.com/dodoritfort/OpenBSD/wiki/Configurer-DOAS)
 4. [Configurer SSH](https://github.com/dodoritfort/OpenBSD/wiki/Configurer-SSH)
